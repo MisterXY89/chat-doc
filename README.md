@@ -18,7 +18,7 @@ The goal of this specific project is to fine-tune Llama2 [3] model for a medical
   - [Approach](#approach)
     - [Training](#training)
     - [Deployment (Application)](#deployment-application)
-    - [Time Plan](#time-plan)
+  - [Time Plan](#time-plan)
   - [Future Work](#future-work)
   - [References](#references)
 
@@ -80,7 +80,7 @@ There are two options I have in mind to embedd the trained model into an applica
 Deployment and hosting will most likely be done on AWS or GCP, both provide a variety of services to host and deploy (ML) applications. 
 Additionally, both have a free tier, which should be sufficient for our purpose.
 
-### Time Plan
+## Time Plan
 Following, we present the time plan for the project - with week of year (WOY) and the respective task.
 
 | WOY | Task |
