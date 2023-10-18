@@ -1,0 +1,11 @@
+general: 
+  - name: "Chat-Doc"
+  - description: "Chat-Doc is a chat application for medical diagnosis."
+  - version: "0.0.1"
+collection:
+  - timeout: 10
+  - datadir: /data
+trainig:
+  - lorem: "ipsum"
+inference:
+  - lorem: "ipsum"
