@@ -7,7 +7,7 @@
 Following, we present the project proposal for the course "Applied Deep Learning" at the Technical University of Vienna.
 The goal of this specific project is to fine-tune Llama2 [3] model for a medical chat-application, a "Chat-Doc".
 
-> If you want a more dense version of this proposal, see [README.md]([./README.md](https://github.com/MisterXY89/chat-doc).
+> If you want a more dense version of this proposal, see [README.md](https://github.com/MisterXY89/chat-doc).
 
 ## Table of Contents
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
