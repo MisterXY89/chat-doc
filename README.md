@@ -81,15 +81,18 @@ Deployment and hosting will most likely be done on AWS or GCP, both provide a va
 Additionally, both have a free tier, which should be sufficient for our purpose.
 
 ## Time Plan
-Following, we present the time plan for the project - with week of year (WOY) and the respective task.
+Following, we present the time plan for the project: WOY (Week of Year), Days (full work days) and respective task.
 
-| WOY | Task |
-| --- | --- |
-| 42 - 43 | Research and setup |
-| 43 - 45 | Collect and parse data from ICD-11 |
-| 45 - 49 | Train Llama2 using QLoRA |
-| 50 - 02 | Deploy model as a service |
-| 01 - 03 | Report and Presentation |
+| WOY | Days | Task |
+| --- | --- | --- |
+| 42 - 43 | 1 | Research and setup |
+| 43 - 45 | 2 | Collect and parse data from ICD-11 |
+| 45 - 49 | 4 | Train Llama2 using QLoRA |
+| 50 - 02 | 4 | Deploy model as a service |
+| 01 - 03 | 1 | Report and Presentation |
+| $\sum$ | 12 |  |
+
+12 days $\approx$ 96 hours, additional time for future work (see below) might be included.
 
 ## Future Work
 As mentioned above, we would like to adress the issue of bias and wrong answers with one or more of the following approaches.
