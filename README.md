@@ -1,6 +1,6 @@
 # "Chat-Doc": Fine-tuning Llama2 for a medical chat-app
 Following, we present the project proposal for the course "Applied Deep Learning" at the Technical University of Vienna.
-The goal of this specific project is to fine-tune the Llama2 [3] model for a medical chat-application, a "Chat-Doc".
+The goal of this specific project is to fine-tune Llama2 [3] model for a medical chat-application, a "Chat-Doc".
 
 ## Introduction
 <!-- why the idea-->
