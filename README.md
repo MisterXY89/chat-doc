@@ -1,6 +1,26 @@
 # "Chat-Doc": Fine-tuning Llama2 for a medical chat-app
+
+> Author: `Tilman Kerl` <br>
+> Project Type: `Bring your own data`
+
+
 Following, we present the project proposal for the course "Applied Deep Learning" at the Technical University of Vienna.
 The goal of this specific project is to fine-tune Llama2 [3] model for a medical chat-application, a "Chat-Doc".
+
+## Table of Contents
+<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+- ["Chat-Doc": Fine-tuning Llama2 for a medical chat-app](#chat-doc-fine-tuning-llama2-for-a-medical-chat-app)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Data](#data)
+    - [Characteristics](#characteristics)
+    - [Data Store and Collection](#data-store-and-collection)
+  - [Approach](#approach)
+    - [Training](#training)
+    - [Deployment (Application)](#deployment-application)
+    - [Time Plan](#time-plan)
+  - [Future Work](#future-work)
+  - [References](#references)
 
 ## Introduction
 <!-- why the idea-->
@@ -59,6 +79,17 @@ There are two options I have in mind to embedd the trained model into an applica
 
 Deployment and hosting will most likely be done on AWS or GCP, both provide a variety of services to host and deploy (ML) applications. 
 Additionally, both have a free tier, which should be sufficient for our purpose.
+
+### Time Plan
+Following, we present the time plan for the project - with week of year (WOY) and the respective task.
+
+| WOY | Task |
+| --- | --- |
+| 42 - 43 | Research and setup |
+| 43 - 45 | Collect and parse data from ICD-11 |
+| 45 - 50 | Train Llama2 using QLoRA |
+| 51 - 02 | Deploy model as a service |
+| 01 - 03 | Report and Presentation |
 
 ## Future Work
 As mentioned above, we would like to adress the issue of bias and wrong answers with one or more of the following approaches.
