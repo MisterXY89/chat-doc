@@ -87,8 +87,8 @@ Following, we present the time plan for the project - with week of year (WOY) an
 | --- | --- |
 | 42 - 43 | Research and setup |
 | 43 - 45 | Collect and parse data from ICD-11 |
-| 45 - 50 | Train Llama2 using QLoRA |
-| 51 - 02 | Deploy model as a service |
+| 45 - 49 | Train Llama2 using QLoRA |
+| 50 - 02 | Deploy model as a service |
 | 01 - 03 | Report and Presentation |
 
 ## Future Work
