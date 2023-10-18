@@ -6,7 +6,7 @@
 Following, we present the project proposal for the course "Applied Deep Learning" at the Technical University of Vienna.
 The goal of this specific project is to fine-tune Llama2 model for a medical chat-application, a "Chat-Doc".
 
-> If you want a more detailed version of this proposal, see [INITIATE.md](INITIATE.md).
+> If you want a more detailed version of this proposal, see [INITIATE.md](./INITIATE.md).
 
 ## Project Idea
 The project aims to fine-tune the Llama2 model for a medical chat application.
