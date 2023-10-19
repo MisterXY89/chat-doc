@@ -1,3 +1,8 @@
+"""
+General config file: for all parts of the project
+"""
+
+
 import yaml
 
 # Change if you renamed your config file
