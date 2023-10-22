@@ -1,7 +1,8 @@
 # "Chat-Doc": Fine-tuning Llama2 for a medical chat-app
 
 > Author: `Tilman Kerl` <br>
-> Project Type: `Bring your own data`
+> Project Type: `Bring your own data` <br>
+> Domain `Natural Language Processing`
 
 Following, we present the project proposal for the course "Applied Deep Learning" at the Technical University of Vienna.
 The goal of this specific project is to fine-tune Llama2 model for a medical chat-application, a "Chat-Doc".
