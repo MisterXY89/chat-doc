@@ -1,7 +1,7 @@
 # "Chat-Doc": Fine-tuning Llama2 for a medical chat-app
 
 > Author: `Tilman Kerl` <br>
-> Project Type: `Bring your own data`
+> Project Type: `Bring your own data` <br>
 > Domain `Natural Language Processing`
 
 
