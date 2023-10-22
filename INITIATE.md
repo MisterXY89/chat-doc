@@ -2,6 +2,7 @@
 
 > Author: `Tilman Kerl` <br>
 > Project Type: `Bring your own data`
+> Domain `Natural Language Processing`
 
 
 Following, we present the project proposal for the course "Applied Deep Learning" at the Technical University of Vienna.
