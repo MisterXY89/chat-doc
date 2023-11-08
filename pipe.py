@@ -1,3 +1,11 @@
+"""
+This file contains the pipeline for the ChatDoc project, accessible via the command line.
+
+Example usage:
+$ python pipe.py generate --dataset icd --output_path ./data
+$ python pipe.py train --dataset pmc --base_model t5-base --output_path ./model
+"""
+
 import argparse
 
 from chat_doc.config import logger
@@ -50,9 +58,5 @@ if __name__ == "__main__":
         # Add your train code here
     else:
         logger.error("Invalid command. Use 'generate' or 'train'.")
-
-    # Example usage:
-    # python pipe.py generate --dataset icd --output_path ./data
-    # python pipe.py train --dataset pmc --base_model t5-base --output_path ./model
 
     args = parser.parse_args()
