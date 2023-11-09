@@ -63,3 +63,6 @@ See also the [references.bib](./references.bib) file.
 [5] Mangrulkar, Sourab et al. "PEFT: State-of-the-art Parameter-Efficient Fine-Tuning methods" https://github.com/huggingface/peft (2022).
 
 [6] Gugger, Sylvain, et al. "Accelerate: Training and inference at scale made simple, efficient and adaptable" https://github.com/huggingface/accelerate (2022).
+
+## License
+This project is licensed under the terms of the MIT license. See [LICENSE](./LICENSE) for more details.
