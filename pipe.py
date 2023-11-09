@@ -49,7 +49,7 @@ if __name__ == "__main__":
         datasetFactory = DatasetFactory()
         datasetFactory.build_dataset(name=args.dataset, output_path=args.output_path)
 
-        logger.info("ICD data generated.")
+        logger.info(f"{args.dataset} data generated.")
 
     elif args.command == "train":
         logger.info(f"Training model on dataset: {args.dataset}")
