@@ -9,40 +9,45 @@ The goal of this specific project is to fine-tune Llama2 model for a medical cha
 
 > If you want to read the proposal of this project, please see [INITIATE.md](https://github.com/MisterXY89/chat-doc/blob/main/INITIATE.md).
 
-## Project Idea
-The project aims to fine-tune the Llama2 model for a medical chat application.
-This chatbot should assist users in assessing their medical symptoms and provide recommendations or help for next steps, leveraging NLP and a reliable medical dataset. 
+## Project Overview
+The ChatDoc project aims to deploy a medical chatbot application that assists users in assessing their medical symptoms and provides reliable recommendations. The chatbot is powered by the Llama2 model, fine-tuned for medical NLP tasks using the QLoRA technique.
 
-## Approach
+## Getting Started
+To use the ChatDoc application, follow the steps below:
+1. Clone the Repository:
+```bash
+git clone https://github.com/MisterXY89/chat-doc.git
+cd chat-doc
+```
 
-### Data Collection
-Utilize the International Classification of Diseases, 11th Revision (ICD-11) dataset to provide accurate and up-to-date medical information. Data will be collected from the ICD-11 Browser or API.
+2. Install Dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-### Training
-Fine-tune the Llama2 model using the QLoRA technique, which combines quantization and Low-Rank Adapters to adapt the model efficiently for specific medical NLP tasks.
+3. Generate Data:
+To generate data for the chatbot, use the following command:
+```bash
+python pipe.py generate --dataset icd 
+```
+Replace icd with pmc or full to choose a different dataset.
 
-### Deployment
-Host the trained model as a service (API) on AWS or GCP, or embed it in a web app (e.g., using Flask) to provide a user-friendly interface for medical inquiries.
+4. Train the Model:
+```bash
+python pipe.py train XXXX
+```
 
-## Dataset
-We will use the ICD-11 dataset, the latest version of the World Health Organization's International Classification of Diseases. This dataset is characterized by its computable knowledge framework, comprising approximately 80,000 entries with 40,000 synonyms, making it a reliable source of medical information for the chatbot's training and inference. Data will be collected and stored in a database hosted on AWS or GCP.
+## Project Structure
+```
+- pipe.py                  # Main pipeline script for data generation and model training.
+- chat_doc/                 # Contains project conf, logging setup, training, and dataset generation 
+    - data_generation/ 
+    - training/
+    - inference/
+- data/                     # Contains the raw data and the generated data.
+- model/                    # Stores the trained model
+```
 
-## Time Plan
-Following, we present the time plan for the project: WOY (Week of Year), Days (full work days) and respective task.
-
-| WOY | Days | Task |
-| --- | --- | --- |
-| 42 - 43 | 1 | Research and setup |
-| 43 - 45 | 2 | Collect and parse data from ICD-11 |
-| 45 - 49 | 4 | Train Llama2 using QLoRA |
-| 50 - 02 | 4 | Deploy model as a service |
-| 01 - 03 | 1 | Report and Presentation |
-| $\sum$ | 12 |  |
-
-12 days $\approx$ 96 hours, additional time for future work (see below) might be included.
-
-## Future Work
-To address bias and accuracy concerns, we could implement approaches including a ground-truth vector-database for answer validation and confidence scoring, a system for human expert verification, integrate the explainability libraries for more transparency, and employ bias detection methods to flag biased responses.
 
 ## References
 See also the [references.bib](./references.bib) file.
