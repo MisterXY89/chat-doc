@@ -10,6 +10,7 @@ import argparse
 
 from chat_doc.config import logger
 from chat_doc.dataset_generation.dataset_factory import DatasetFactory
+from chat_doc.training.train import Trainer
 
 if __name__ == "__main__":
     logger.info("Pipe ready")
@@ -55,7 +56,10 @@ if __name__ == "__main__":
         logger.info(f"Training model on dataset: {args.dataset}")
         logger.info(f"Base model: {args.base_model}")
         logger.info(f"Output path: {args.output_path}")
-        # Add your train code here
+
+        trainer = Trainer(args.dataset, args.base_model, args.output_path)
+        trainer.train()
+
     else:
         logger.error("Invalid command. Use 'generate' or 'train'.")
 
