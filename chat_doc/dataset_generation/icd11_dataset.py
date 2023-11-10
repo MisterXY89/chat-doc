@@ -59,10 +59,13 @@ class ICD11Dataset(ChatDataset):
             sibls = row["sibls"]
             synonym = row["synonym"]
 
-            prompt = f"Describe {name} based on the international classification of deseases from the WHO in three sentences including the definition, siblings and the synonym."
-            response = f"The definition for {name} is defined as: '{definition}'. The Sibling codes are {','.join(sibls)}. The Synonyms are {','.join(synonym)}."
-
-            prompts.append({"prompt": prompt, "response": response})
+            prompts.append(
+                self.unify_prompt(
+                    instruction=f"Describe {name} based on the international classification of deseases from the WHO in three sentences including the definition, siblings and the synonym.",
+                    context="",
+                    response=f"The definition for {name} is defined as: '{definition}'. The Sibling codes are {','.join(sibls)}. The Synonyms are {','.join(synonym)}.",
+                )
+            )
 
         logger.info("ICD-11 prompts built.")
         self.prompts = prompts

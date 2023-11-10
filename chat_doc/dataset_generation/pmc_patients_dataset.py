@@ -52,6 +52,14 @@ class PMCPatientsDataset(ChatDataset):
         self.processed = True
         self.dataset = pmc_data
 
+    def format_dolly(sample):
+        instruction = f"### Instruction\n{sample['instruction']}"
+        context = f"### Context\n{sample['context']}" if len(sample["context"]) > 0 else None
+        response = f"### Answer\n{sample['response']}"
+        # join all the parts together
+        prompt = "\n\n".join([i for i in [instruction, context, response] if i is not None])
+        return prompt
+
     def build_prompts(self):
         if self._is_processed():
             pmc_data = self.dataset.copy()
@@ -67,10 +75,13 @@ class PMCPatientsDataset(ChatDataset):
             sex = row["sex"]
             similar_patients = row["similar_patients"]
 
-            prompt = f"Please describe a real-world patient case including symptoms about a {_str_sex(sex)} patient of {age} years old with the following title: {title}"
-            response = f"{patient} The patient is similar to {similar_patients} other patients."
-
-            prompts.append({"prompt": prompt, "response": response})
+            prompts.append(
+                self.unify_prompt(
+                    instruction=f"Please describe a real-world patient case including symptoms about a {_str_sex(sex)} patient of {age} years old with the following title: {title}",
+                    context="",
+                    response=f"{patient} The patient is similar to {similar_patients} other patients.",
+                )
+            )
 
         logger.info("PMC patients prompts built.")
         self.prompts = prompts

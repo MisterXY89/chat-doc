@@ -53,6 +53,25 @@ class ChatDataset(object):
     def _is_prompt_fn(self):
         return "prompt_" if self.prompts else ""
 
+    def unify_prompt(self, instruction, response, context=""):
+        """
+        Unify the prompt format for all datasets for instruct tuning.
+
+        Args:
+            instruction (str): instruction text
+            response (str): response text
+            context (str): context text (optional)
+
+        Returns:
+            str: multiline unified prompt string
+        """
+        instruction = f"### Instruction\n{instruction}"
+        context = f"### Context\n{context}" if len(context) > 0 else None
+        response = f"### Answer\n{response}"
+        # join all the parts together
+        prompt = "\n\n".join([i for i in [instruction, context, response] if i is not None])
+        return prompt
+
     def get_dataset_name(self):
         return self.name
 
