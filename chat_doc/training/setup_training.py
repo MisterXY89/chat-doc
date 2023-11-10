@@ -4,6 +4,8 @@ import boto3
 import sagemaker
 from huggingface_hub import login
 
+from chat_doc.config import DATA_DIR, logger
+
 
 class TrainingsSetup:
     def __init__(self):
@@ -39,6 +41,9 @@ class TrainingsSetup:
                 "You are not logged in to the Hugging Face Hub. Please run `huggingface-cli login --token TOKEN` to login."
             )
         return True
+
+    def load_data(self):
+        pass
 
     def setup(self):
         self.setup_hf()
