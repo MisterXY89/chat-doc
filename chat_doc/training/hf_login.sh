@@ -1,5 +1,5 @@
 #!/bin/bash
 # Usage: bash hf_login.sh
 
-$TOKEN = "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"
+$TOKEN = "RESET TOKEN"
 huggingface-cli login --token $TOKEN
