@@ -40,7 +40,7 @@ class PMCPatientsDataset(ChatDataset):
         # sex
         pmc_data.rename({"gender": "sex"}, inplace=True, axis=1)
 
-        # sim patients
+        # num of sim patients
         pmc_data.similar_patients = pmc_data.similar_patients.apply(lambda x: len(x)).astype(int)
 
         # drop irrelevant columns
@@ -51,14 +51,6 @@ class PMCPatientsDataset(ChatDataset):
         logger.info("PMC patients data processed.")
         self.processed = True
         self.dataset = pmc_data
-
-    def format_dolly(sample):
-        instruction = f"### Instruction\n{sample['instruction']}"
-        context = f"### Context\n{sample['context']}" if len(sample["context"]) > 0 else None
-        response = f"### Answer\n{sample['response']}"
-        # join all the parts together
-        prompt = "\n\n".join([i for i in [instruction, context, response] if i is not None])
-        return prompt
 
     def build_prompts(self):
         if self._is_processed():
@@ -76,6 +68,7 @@ class PMCPatientsDataset(ChatDataset):
             similar_patients = row["similar_patients"]
 
             prompts.append(
+                # inherit from ChatDataset
                 self.unify_prompt(
                     instruction=f"Please describe a real-world patient case including symptoms about a {_str_sex(sex)} patient of {age} years old with the following title: {title}",
                     context="",

@@ -18,9 +18,6 @@ class ICD11Dataset(ChatDataset):
     def load_data(self: str):
         """
         Load ICD-11 data from json file.
-
-        Args:
-            icd11_path (str): path to ICD-11 json file.
         """
         try:
             self.dataset = pd.read_json(self.icd11_path)
@@ -60,6 +57,7 @@ class ICD11Dataset(ChatDataset):
             synonym = row["synonym"]
 
             prompts.append(
+                # inherit from ChatDataset
                 self.unify_prompt(
                     instruction=f"Describe {name} based on the international classification of deseases from the WHO in three sentences including the definition, siblings and the synonym.",
                     context="",
