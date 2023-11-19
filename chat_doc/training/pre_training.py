@@ -64,3 +64,5 @@ class PreTrainingProcessor:
 
         # Print total number of samples
         logger.info(f"Total number of samples: {len(lm_dataset)}")
+
+        return lm_dataset

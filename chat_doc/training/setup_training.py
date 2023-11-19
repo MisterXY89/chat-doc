@@ -2,6 +2,7 @@ import subprocess
 
 import boto3
 import sagemaker
+from datasets import load_from_disk
 from huggingface_hub import login as hf_login
 from transformers import AutoTokenizer
 
@@ -47,8 +48,22 @@ class TrainingsSetup:
         logger.info("Logged in to Hugging Face Hub.")
         return True
 
-    def load_data(self):
-        pass
+    def training_input_path(self, dataset_name="full"):
+        return f"s3://{self.sess.default_bucket()}/processed/llama/{dataset_name}/train"
+
+    def upload_data(self, train_set, dataset_name="full"):
+        # save train_dataset to s3
+        train_set.save_to_disk(self.training_input_path(dataset_name))
+
+        print("uploaded data to:")
+        print(f"training dataset to: {self.training_input_path(dataset_name)}")
+
+    def load_data(self, dataset_name="full"):
+        # load train_dataset from s3
+        s3_path = self.training_input_path(dataset_name)
+        train_set = load_from_disk(s3_path)
+        logger.info(f"Loaded train_set from {s3_path}")
+        return train_set
 
     def setup(self):
         self.setup_hf()

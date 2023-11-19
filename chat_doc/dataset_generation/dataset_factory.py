@@ -66,7 +66,7 @@ class DatasetFactory:
         elif name == "pmc":
             self.dataset = PMCPatientsDataset()
         elif name == "all":
-            pass
+            return self.load_full_dataset(output_path)
         else:
             raise ValueError(f"Dataset {name} not supported.")
 
