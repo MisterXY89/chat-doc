@@ -53,15 +53,15 @@ class ICD11Dataset(ChatDataset):
         for _, row in tqdm(icd11_data.iterrows(), total=icd11_data.shape[0]):
             name = row["name"]
             definition = row["definition"]
-            sibls = row["sibls"]
-            synonym = row["synonym"]
+            sibls = f"The Sibling codes are {','.join(row['sibls'])}" if row["sibls"] else ""
+            synonyms = f"The Synonyms are {','.join(row['synonym'])}." if row["synonym"] else ""
 
             prompts.append(
                 # inherit from ChatDataset
                 self.unify_prompt(
                     instruction=f"Describe {name} based on the international classification of deseases from the WHO in three sentences including the definition, siblings and the synonym.",
                     context="",
-                    response=f"The definition for {name} is defined as: '{definition}'. The Sibling codes are {','.join(sibls)}. The Synonyms are {','.join(synonym)}.",
+                    response=f"The definition for {name} is defined as: '{definition}'. {sibls}. {synonyms}",
                 )
             )
 
