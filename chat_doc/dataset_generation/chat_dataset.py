@@ -12,10 +12,11 @@ class ChatDataset(object):
         self.prompts = None
         self.processed = False
 
-    def save(self, path=DATA_DIR, prompt=False, fn_affix=""):
+    def save(self, prompt=False, fn_affix=""):
         """
         self.dataset is a pandas DataFrame --> we use the pickle format to save it and keep the structure
         """
+        path = DATA_DIR
         if prompt:
             try:
                 with open(
@@ -34,10 +35,11 @@ class ChatDataset(object):
             except Exception as e:
                 logger.error(f"Error saving dataset: {e}")
 
-    def load(self, path=DATA_DIR, fn_affix="", is_prompts=False):
+    def load(self, fn_affix="", is_prompts=False):
         """
         self.dataset is a pandas DataFrame --> we use the pickle format to save it and keep the structure
         """
+        path = DATA_DIR
         if is_prompts:
             self.prompts = True
         try:
