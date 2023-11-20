@@ -59,6 +59,7 @@ class Trainer:
         logger.info("Loading dataset")
         self.dataset_factory = DatasetFactory()
         self.dataset = self.dataset_factory.load_dataset(self.dataset_name)
+        print(len(self.dataset))
 
         logger.info("Initializing trainer")
         self.trainings_config = TrainingsSetup()

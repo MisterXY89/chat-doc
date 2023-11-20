@@ -11,7 +11,7 @@ from chat_doc.dataset_generation.pmc_patients_dataset import PMCPatientsDataset
 class DatasetFactory:
     def __init__(self):
         self.dataset = None
-        self.path = ROOT_DIR, "/data/full_prompts.pkl"
+        self.path = ROOT_DIR + "/data/full_prompts.pkl"
 
     def build_full_dataset(self):
         # load both datasets
