@@ -58,7 +58,7 @@ class Trainer:
     def _initialize(self):
         logger.info("Loading dataset")
         self.dataset_factory = DatasetFactory()
-        self.dataset = self.dataset_factory.load_full_dataset(self.dataset_name)
+        self.dataset = self.dataset_factory.load_dataset(self.dataset_name)
 
         logger.info("Initializing trainer")
         self.trainings_config = TrainingsSetup()
