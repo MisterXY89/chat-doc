@@ -18,6 +18,7 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 # Change if you renamed your config filey
 CONFIG_FILE_PATH = f"{BASE_DIR}/config.yml"
 CREDENTIAL_FILE_PATH = f"{BASE_DIR}/.env"
+print(CREDENTIAL_FILE_PATH)
 
 
 # Load and parse the YAML configuration file
@@ -27,13 +28,12 @@ def load_yaml_config(config_file_path):
     return config
 
 
-dotenv_config = decouple_config(CREDENTIAL_FILE_PATH)
 yaml_config = load_yaml_config(CONFIG_FILE_PATH)
 
 # Combine data from .env and YAML into a single config object
 config = {
     "credentials": {
-        "hf_token": dotenv_config("HF_TOKEN"),
+        "hf_token": decouple_config("HF_TOKEN"),
         # ...
     },
     **yaml_config,
