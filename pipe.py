@@ -42,6 +42,16 @@ if __name__ == "__main__":
     train_parser.add_argument(
         "--output_path", default="./model", help="Output path (default: ./model)"
     )
+    # setting default to None here so that we can check if the user has set the hyperparameter + defaults are set in train.py
+    train_parser.add_argument(
+        "--epoch", type=int, help="Number of epochs (default: 3)", default=None
+    )
+    train_parser.add_argument(
+        "--lr", type=float, help="Learning rate (default: 2e-4)", default=None
+    )
+    train_parser.add_argument(
+        "--batch_size", type=int, help="Batch size (default: 2)", default=None
+    )
 
     args = parser.parse_args()
 
@@ -59,7 +69,17 @@ if __name__ == "__main__":
         logger.info(f"Base model: {args.base_model}")
         logger.info(f"Output path: {args.output_path}")
 
-        trainer = Trainer(args.dataset, args.base_model, args.output_path)
+        hyperparams = {}
+        if args.epoch is not None:
+            hyperparams["epochs"] = args.epoch
+
+        if args.lr is not None:
+            hyperparams["lr"] = args.lr
+
+        if args.batch_size is not None:
+            hyperparams["per_device_train_batch_size"] = args.batch_size
+
+        trainer = Trainer(args.dataset, args.base_model, args.output_path, hyperparams)
         trainer.train()
 
     else:
