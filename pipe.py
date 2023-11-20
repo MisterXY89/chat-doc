@@ -35,7 +35,9 @@ if __name__ == "__main__":
         "--dataset", choices=["pmc", "icd", "full"], required=True, help="Dataset to train on"
     )
     train_parser.add_argument(
-        "--base_model", default="t5-base", help="Base model (default: t5-base)"
+        "--base_model",
+        default="meta-llama/Llama-2-13b-hf",
+        help="Base model (default: Llama-2-13b-hf)",
     )
     train_parser.add_argument(
         "--output_path", default="./model", help="Output path (default: ./model)"
