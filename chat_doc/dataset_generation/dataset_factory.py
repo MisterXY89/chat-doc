@@ -11,9 +11,12 @@ class DatasetFactory:
         self.dataset = None
 
     def build_full_dataset(self, output_path):
-        icd_prompts = self.build_dataset("icd", output_path)
-        pmc_prompts = self.build_dataset("pmc", output_path)
+        # icd_prompts = self.build_dataset("icd", output_path)
+        # pmc_prompts = self.build_dataset("pmc", output_path)
         # prompts is list of dicts with keys: "prompt", "response"
+        # load both datasets
+        icd_prompts = self.load_dataset("icd")
+        pmc_prompts = self.load_dataset("pmc")
         prompts = icd_prompts + pmc_prompts
 
         try:
