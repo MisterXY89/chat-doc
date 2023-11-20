@@ -6,6 +6,8 @@ from functools import partial
 from itertools import chain
 from random import randint
 
+import datasets
+
 from chat_doc.config import config, logger
 
 
@@ -48,6 +50,7 @@ class PreTrainingProcessor:
 
     def pre_train_dataset(self, dataset):
         # apply prompt template per sample
+        dataset = datasets.Dataset.from_list(dataset)
         dataset = dataset.map(self.template_dataset, remove_columns=list(dataset.features))
         # print random sample
         print(dataset[randint(0, len(dataset))]["text"])
