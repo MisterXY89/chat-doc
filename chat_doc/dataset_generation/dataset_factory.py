@@ -75,7 +75,7 @@ class DatasetFactory:
             self.dataset = ICD11Dataset()
         elif name == "pmc":
             self.dataset = PMCPatientsDataset()
-        elif name == "all":
+        elif name == "full":
             return self.load_full_dataset()
         else:
             raise ValueError(f"Dataset {name} not supported.")
