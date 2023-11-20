@@ -6,14 +6,14 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from chat_doc.config import DATA_DIR, logger
+from chat_doc.config import BASE_DIR, logger
 from chat_doc.dataset_generation.chat_dataset import ChatDataset
 
 
 class ICD11Dataset(ChatDataset):
     def __init__(self, name="ICD"):
         super().__init__(name)
-        self.icd11_path = DATA_DIR + "/pinglab-ICD11-data.json"
+        self.icd11_path = BASE_DIR + "/data/pinglab-ICD11-data.json"
 
     def load_data(self: str):
         """

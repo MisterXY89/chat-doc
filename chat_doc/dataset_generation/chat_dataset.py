@@ -6,7 +6,7 @@ from chat_doc.config import DATA_DIR, logger
 
 
 class ChatDataset(object):
-    def __init__(self, name) -> None:
+    def __init__(self, name, prompts=None) -> None:
         self.name = name
         self.dataset = None
         self.prompts = None
@@ -16,19 +16,30 @@ class ChatDataset(object):
         """
         self.dataset is a pandas DataFrame --> we use the pickle format to save it and keep the structure
         """
+        if prompt:
+            try:
+                with open(
+                    f"{path}/{self._is_prompt_fn()}{self.name}{self._get_affix(fn_affix)}.pkl", "wb"
+                ) as fi:
+                    pickle.dump(self.prompts, fi)
+                logger.info(f"Dataset {self.name} saved to file.")
+            except Exception as e:
+                logger.error(f"Error saving dataset: {e}")
+        else:
+            try:
+                self.dataset.to_pickle(
+                    f"{path}/{self._is_prompt_fn()}{self.name}{self._get_affix(fn_affix)}.pkl"
+                )
+                logger.info(f"Dataset {self.name} saved to file.")
+            except Exception as e:
+                logger.error(f"Error saving dataset: {e}")
 
-        try:
-            self.dataset.to_pickle(
-                f"{path}/{self._is_prompt_fn()}{self.name}{self._get_affix(fn_affix)}.pkl"
-            )
-            logger.info(f"Dataset {self.name} saved to file.")
-        except Exception as e:
-            logger.error(f"Error saving dataset: {e}")
-
-    def load(self, path=DATA_DIR, fn_affix=""):
+    def load(self, path=DATA_DIR, fn_affix="", is_prompts=False):
         """
         self.dataset is a pandas DataFrame --> we use the pickle format to save it and keep the structure
         """
+        if is_prompts:
+            self.prompts = True
         try:
             self.dataset = pd.read_pickle(
                 f"{path}/{self._is_prompt_fn()}{self.name}{self._get_affix(fn_affix)}.pkl"

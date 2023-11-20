@@ -12,8 +12,10 @@ from decouple import (
 )
 
 # --------- load config ---------#
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, "data")
+# parent dir of chat_doc (BASE_DIR)
+DATA_DIR = ROOT_DIR + "/data"
 
 # Change if you renamed your config filey
 CONFIG_FILE_PATH = f"{BASE_DIR}/config.yml"
