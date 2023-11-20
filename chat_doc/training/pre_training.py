@@ -50,6 +50,8 @@ class PreTrainingProcessor:
 
     def pre_train_dataset(self, dataset):
         # apply prompt template per sample
+        print(dataset[0])
+        print(dataset[1])
         dataset = datasets.Dataset.from_list(dataset)
         dataset = dataset.map(self.template_dataset, remove_columns=list(dataset.features))
         # print random sample
