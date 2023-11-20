@@ -3,7 +3,7 @@ import pickle
 
 import pandas as pd
 
-from chat_doc.config import DATA_DIR, logger
+from chat_doc.config import DATA_DIR, ROOT_DIR, logger
 from chat_doc.dataset_generation.icd11_dataset import ICD11Dataset
 from chat_doc.dataset_generation.pmc_patients_dataset import PMCPatientsDataset
 
@@ -35,13 +35,13 @@ class DatasetFactory:
 
         return prompts
 
-    def load_full_dataset(self, output_path):
+    def load_full_dataset(self):
         try:
-            with open(os.path.join(output_path, "full_prompts.pkl"), "rb") as f:
+            with open(os.path.join(ROOT_DIR, "/data/full_prompts.pkl"), "rb") as f:
                 prompts = pickle.load(f)
-                logger.info(f"Full prompts loaded from {output_path}/full_prompts.pkl")
+                logger.info(f"Full prompts loaded from {ROOT_DIR}/data/full_prompts.pkl")
         except Exception as e:
-            logger.error(f"Could not load full prompts from {output_path}/full_prompts.pkl")
+            logger.error(f"Could not load full prompts from {ROOT_DIR}/data/full_prompts.pkl")
             logger.error(e)
             prompts = None
 

@@ -60,18 +60,16 @@ class Trainer:
         self.dataset_factory = DatasetFactory()
         self.dataset = self.dataset_factory.load_full_dataset(self.dataset_name)
 
-        logger.info("Initializing pre-training processor")
-        self.pre_train_processor = PreTrainingProcessor(self.trainings_config.tokenizer)
-        self.train_set = self.pre_train_processor.pre_train_dataset(self.dataset)
-
         logger.info("Initializing trainer")
         self.trainings_config = TrainingsSetup()
         self.trainings_config.setup()
         self.training_input_path = self.trainings_config.training_input_path(self.dataset_name)
 
-        self.trainings_config.upload_data(self.train_set)
+        logger.info("Initializing pre-training processor")
+        self.pre_train_processor = PreTrainingProcessor(self.trainings_config.tokenizer)
+        self.train_set = self.pre_train_processor.pre_train_dataset(self.dataset)
 
-        #
+        self.trainings_config.upload_data(self.train_set)
 
         logger.info("Initializing complete.")
         self._is_initialized = True
