@@ -13,6 +13,7 @@ class DatasetFactory:
     def __init__(self):
         self.dataset = None
         self.path = ROOT_DIR + "/data/full_prompts.pkl"
+        self.available_datasets = ["icd", "pmc", "full"]
 
     def build_full_dataset(self):
         # load both datasets
@@ -58,7 +59,7 @@ class DatasetFactory:
             self.build_full_dataset()
         else:
             raise ValueError(
-                f"Dataset {name} not supported. Please choose from: 'icd', 'pmc', 'full'"
+                f"Dataset {name} not supported. Please choose from: {self.available_datasets}"
             )
 
         self.dataset.load_data()
@@ -84,7 +85,9 @@ class DatasetFactory:
         elif name == "full":
             return self.load_full_dataset()
         else:
-            raise ValueError(f"Dataset {name} not supported.")
+            raise ValueError(
+                f"Dataset {name} not supported. Please choose from: {self.available_datasets}"
+            )
 
         self.dataset.load(is_prompts=is_prompts)
 
