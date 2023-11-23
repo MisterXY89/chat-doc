@@ -73,8 +73,6 @@ class DatasetFactory:
 
     def convert_to_hf(self, dataset):
         logger.info("Converting to HuggingFace Dataset")
-        print(type(dataset))
-        print(len(dataset))
         hf_dataset = datasets.Dataset.from_pandas(pd.DataFrame(data=dataset))
         return hf_dataset
 

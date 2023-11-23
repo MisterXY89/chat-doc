@@ -54,14 +54,18 @@ class ICD11Dataset(ChatDataset):
             name = row["name"]
             definition = row["definition"]
             sibls = f"The Sibling codes are {','.join(row['sibls'])}" if row["sibls"] else ""
-            synonyms = f"The Synonyms are {','.join(row['synonym'])}." if row["synonym"] else ""
+            synonyms = (
+                f"The Synonyms are {','.join(row['synonym'])}."
+                if row["synonym"] and len(row["synonym"]) > len("key not found")
+                else ""
+            )
 
             prompts.append(
                 # inherit from ChatDataset
                 self.unify_prompt(
                     instruction=f"Describe {name} based on the international classification of deseases from the WHO in three sentences including the definition, siblings and the synonym.",
-                    context="",
-                    response=f"The definition for {name} is defined as: '{definition}'. {sibls}. {synonyms}",
+                    context=f"The desease or illnes has these traits: {sibls}. {synonyms}",
+                    response=f"The definition for {name} is defined as: '{definition}'.",
                 )
             )
 
