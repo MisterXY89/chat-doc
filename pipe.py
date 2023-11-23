@@ -25,9 +25,9 @@ if __name__ == "__main__":
     generate_parser.add_argument(
         "--dataset", choices=["pmc", "icd", "full"], required=True, help="Dataset to generate"
     )
-    generate_parser.add_argument(
-        "--output_path", default="./data", help="Output path (default: ./data)"
-    )
+    # generate_parser.add_argument(
+    #     "--output_path", default="./data", help="Output path (default: ./data)"
+    # )
 
     # "train" subcommand
     train_parser = subparsers.add_parser("train", help="Train the model")
@@ -57,10 +57,10 @@ if __name__ == "__main__":
 
     if args.command == "generate":
         logger.info(f"Generating data for dataset: {args.dataset}")
-        logger.info(f"Output path: {args.output_path}")
+        # logger.info(f"Output path: {args.output_path}")
 
         datasetFactory = DatasetFactory()
-        datasetFactory.build_dataset(name=args.dataset, output_path=args.output_path)
+        datasetFactory.build_dataset(name=args.dataset)
 
         logger.info(f"{args.dataset} data generated.")
 

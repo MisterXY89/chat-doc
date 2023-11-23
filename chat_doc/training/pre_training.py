@@ -57,6 +57,10 @@ class PreTrainingProcessor:
         # print random sample
         print(dataset[randint(0, len(dataset))]["text"])
 
+        dataset = {}
+
+        dataset = datasets.Dataset.from_dict(dataset)
+
         # tokenize and chunk dataset
         lm_dataset = dataset.map(
             lambda sample: self.tokenizer(sample["text"]),

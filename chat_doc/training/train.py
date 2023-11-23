@@ -58,8 +58,9 @@ class Trainer:
     def _initialize(self):
         logger.info("Loading dataset")
         self.dataset_factory = DatasetFactory()
-        self.dataset = self.dataset_factory.load_dataset(self.dataset_name)
-        print(len(self.dataset))
+        dataset_base = self.dataset_factory.load_dataset(self.dataset_name)
+        # HF-Set
+        self.dataset = self.dataset_factory.convert_to_hf(dataset_base)
 
         logger.info("Initializing trainer")
         self.trainings_config = TrainingsSetup()

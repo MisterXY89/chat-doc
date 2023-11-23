@@ -83,7 +83,9 @@ class ChatDataset(object):
         response = f"### Answer\n{response}"
         # join all the parts together
         prompt = "\n\n".join([i for i in [instruction, context, response] if i is not None])
-        return prompt
+        return {
+            "text": prompt,
+        }
 
     def get_dataset_name(self):
         return self.name

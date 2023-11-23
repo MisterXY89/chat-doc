@@ -1,6 +1,7 @@
 import os
 import pickle
 
+import datasets
 import pandas as pd
 
 from chat_doc.config import DATA_DIR, ROOT_DIR, logger
@@ -69,6 +70,13 @@ class DatasetFactory:
         # self.dataset.save(output_path, prompt=True, fn_affix="v1")
 
         return self.dataset.prompts
+
+    def convert_to_hf(self, dataset):
+        logger.info("Converting to HuggingFace Dataset")
+        print(type(dataset))
+        print(len(dataset))
+        hf_dataset = datasets.Dataset.from_pandas(pd.DataFrame(data=dataset))
+        return hf_dataset
 
     def load_dataset(self, name, is_prompts=True):
         if name == "icd":
