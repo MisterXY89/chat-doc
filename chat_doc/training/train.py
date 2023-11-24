@@ -30,12 +30,13 @@ class Trainer:
             "merge_weights": True,  # wether to merge LoRA into the model (needs more memory)
         }
 
-    def _hf_estimator(self, hyperparameters, job_name, role):
+    def _hf_estimator(self, hyperparameters, job_name):
         # create the Estimator
         self.huggingface_estimator = HuggingFace(
             entry_point="run_clm.py",  # train script
-            source_dir="scripts",  # directory which includes all the files needed for training
-            instance_type="ml.g5.4xlarge",  # instances type used for the training job
+            source_dir="chat_doc/training/",  # directory which includes all the files needed for training
+            # instance_type="ml.g5.4xlarge",  # instances type used for the training job
+            instance_type="ml.g4dn.xlarge",  # instances type used for the training job
             instance_count=1,  # the number of instances used for training
             base_job_name=job_name,  # the name of the training job
             role=self.trainings_config.role,  # Iam role used in training job to access AWS ressources, e.g. S3

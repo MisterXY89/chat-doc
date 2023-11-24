@@ -36,8 +36,8 @@ if __name__ == "__main__":
     )
     train_parser.add_argument(
         "--base_model",
-        default="meta-llama/Llama-2-13b-hf",
-        help="Base model (default: Llama-2-13b-hf)",
+        default="meta-llama/Llama-2-7b-hf",
+        help="Base model (default: Llama-2-7b-hf)",
     )
     train_parser.add_argument(
         "--output_path", default="./model", help="Output path (default: ./model)"
