@@ -37,6 +37,13 @@ Replace icd with pmc or full to choose a different dataset.
 python pipe.py train XXXX
 ```
 
+## Run tests
+
+To run the tests, run the following command:
+```bash
+python -m unittest
+```
+
 ## Project Structure
 ```
 - pipe.py                  # Main pipeline script for data generation and model training.
