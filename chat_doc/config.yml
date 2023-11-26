@@ -2,8 +2,6 @@ app:
   name: "Chat-Doc"
   description: "Chat-Doc is a chat application for medical diagnosis."
   version: "0.0.1"
-auth:
-  hf_token: "YOUR_HF_TOKEN"  
 logging:
   version: 1
   formatters:

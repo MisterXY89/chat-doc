@@ -23,31 +23,29 @@ CREDENTIAL_FILE_PATH = f"{BASE_DIR}/.env"
 print(CREDENTIAL_FILE_PATH)
 
 
-# Load and parse the YAML configuration file
-def load_yaml_config(config_file_path):
+# parse the YAML configuration file
+def parse_yaml_config(config_file_path):
     with open(config_file_path, "r") as config_file:
         config = yaml.safe_load(config_file)
     return config
 
 
-yaml_config = load_yaml_config(CONFIG_FILE_PATH)
+def load_config():
+    yaml_config = parse_yaml_config(CONFIG_FILE_PATH)
 
-# Combine data from .env and YAML into a single config object
-config = {
-    "credentials": {
-        "hf_token": decouple_config("HF_TOKEN"),
-        # ...
-    },
-    **yaml_config,
-}
+    # Combine data from .env and YAML into a single config object
+    config = {
+        "credentials": {
+            "hf_token": decouple_config("HF_TOKEN"),
+            # ...
+        },
+        **yaml_config,
+    }
+
+    return config
 
 
-# saftey check
-# --> ensure that the required keys exist in the configuration
-required_keys = ["logging"]
-for key in required_keys:
-    if key not in config:
-        raise ValueError(f"Missing '{key}' in the configuration file.")
+config = load_config()
 
 # Additional helper functions for specific configuration values, etc. can be defined here
 # ...
