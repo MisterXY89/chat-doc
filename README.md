@@ -41,7 +41,7 @@ python pipe.py train XXXX
 
 To run the tests, run the following command:
 ```bash
-python -m unittest
+python -m pytest test
 ```
 
 ## Project Structure

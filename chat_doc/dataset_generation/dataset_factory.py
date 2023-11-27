@@ -16,17 +16,17 @@ class DatasetFactory:
         self.available_datasets = ["icd", "pmc", "full"]
 
     def build_full_dataset(self):
-        # load both datasets
+        # load both datasets, if they don't exist, build them
         icd_prompts = self.load_dataset("icd")
         pmc_prompts = self.load_dataset("pmc")
-        print(len(icd_prompts))
-        print(len(pmc_prompts))
+
+        if icd_prompts is None:
+            icd_prompts = self.build_dataset("icd")
+        if pmc_prompts is None:
+            pmc_prompts = self.build_dataset("pmc")
 
         # combine them
         prompts = icd_prompts + pmc_prompts
-
-        print(len(prompts))
-        print(len(icd_prompts) + len(pmc_prompts))
 
         try:
             with open(self.path, "wb") as f:

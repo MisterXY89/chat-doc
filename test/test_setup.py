@@ -1,19 +1,13 @@
-import os
-import sys
-import unittest
-
-# append to path to import from chat_doc
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import pytest
 
 
-class TestSetup(unittest.TestCase):
-    def test_config(self):
-        from chat_doc.config import config
+def test_config():
+    from chat_doc.config import config
 
-        required_keys = ["logging", "app", "credentials"]
-        for key in required_keys:
-            self.assertIn(key, config.keys())
+    required_keys = ["logging", "app", "credentials"]
+    for key in required_keys:
+        assert key in config
 
 
 if __name__ == "__main__":
-    unittest.main()
+    pytest.main()
