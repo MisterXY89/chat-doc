@@ -37,6 +37,10 @@ Replace icd with pmc or full to choose a different dataset.
 python pipe.py train XXXX
 ```
 
+## Training Results
+The training results are stored in the [logs](./logs) folder and visualized below:
+![Training resulst](logs/logs-insights-results.png)
+
 ## Run tests
 
 To run the tests, run the following command:
