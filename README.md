@@ -38,8 +38,8 @@ python pipe.py train XXXX
 ```
 
 ## Training Results
-The training results are stored in the [logs](./logs) folder and visualized below:
-![Training resulst](logs/logs-insights-results.png)
+The first training results are stored in the [logs](./logs) folder and visualized below:
+![Training resulst](images/logs-insights-results.png)
 
 ## Run tests
 
