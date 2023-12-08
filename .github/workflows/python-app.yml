@@ -1,41 +1,31 @@
-name: Python application
+name: Python Package Using Anaconda
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+on: [push]
 
 jobs:
-  build:
-
+  build-linux:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Miniconda
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        auto-update-conda: true
-        miniconda-version: "latest"
-        python-version: "3.10"
-        activate-environment: adl
-        environment-file: environment.yml
-        condarc-file: condarc.yml
+    - uses: actions/checkout@v2
 
-    # Assuming you have an environment.yml that specifies dependencies.
-    # If not, you can use conda or mamba commands to install packages directly
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10
+
     - name: Install dependencies
       run: |
-        conda env update --file environment.yml --name adl
+        # $CONDA is an environment variable pointing to the root of the miniconda directory
+        $CONDA/bin/conda env update --file environment.yml --name adl
 
     - name: Lint with flake8
       run: |
-        conda run --name adl flake8 --config .flake8
+        $CONDA/bin/conda install flake8
+        # Lint using flake8 with settings from .flake8 file
+        $CONDA/bin/flake8 --config .flake8
 
     - name: Test with pytest
       run: |
-        conda run --name adl python -m pytest
+        $CONDA/bin/conda install pytest
+        $CONDA/bin/pytest
