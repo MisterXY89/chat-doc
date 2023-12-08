@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from chat_doc.config import BASE_DIR, logger, SEED
+from chat_doc.config import BASE_DIR, SEED, logger
 from chat_doc.dataset_generation.chat_dataset import ChatDataset
 
 np.random.seed(SEED)
@@ -43,10 +43,11 @@ class DiagnoseDataset(ChatDataset):
 
         for col in diagnose_data.columns:
             # remove all urls from text
-            diagnose_data[col] = diagnose_data[col].str.replace(r'\s*https?://\S+(\s+|$)', ' ').str.strip()
+            diagnose_data[col] = (
+                diagnose_data[col].str.replace(r"\s*https?://\S+(\s+|$)", " ").str.strip()
+            )
             # remove all html tags from text
-            diagnose_data[col] = diagnose_data[col].str.replace(r'<[^<]+?>', ' ').str.strip()
-
+            diagnose_data[col] = diagnose_data[col].str.replace(r"<[^<]+?>", " ").str.strip()
 
         logger.info("Diagnose-Me data processed.")
         self.processed = True
@@ -60,8 +61,7 @@ class DiagnoseDataset(ChatDataset):
         diagnose_data = diagnose_data.reset_index(drop=True)
 
         prompts = []
-        for _, row in tqdm(diagnose_data.iterrows(), total=diagnose_data.shape[0]):                  
-
+        for _, row in tqdm(diagnose_data.iterrows(), total=diagnose_data.shape[0]):
             prompts.append(
                 # inherit from ChatDataset
                 self.unify_prompt(
