@@ -4,9 +4,8 @@ Load and process ICD-11 data to generate a dataset for training and testing.
 
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
-
 from datasets import load_dataset
+from tqdm import tqdm
 
 from chat_doc.config import BASE_DIR, logger
 from chat_doc.dataset_generation.chat_dataset import ChatDataset
@@ -41,13 +40,14 @@ class MedDialogueDataset(ChatDataset):
         diag_list = []
         for record in med_dialogue:
             utt = record["utterances"]
-            diag_list.append({
-                "patient": utt[0].replace("patient: ", ""),
-                "doctor": utt[1].replace("doctor: ", "")
-            })
+            diag_list.append(
+                {
+                    "patient": utt[0].replace("patient: ", ""),
+                    "doctor": utt[1].replace("doctor: ", ""),
+                }
+            )
 
         med_dialogue = pd.DataFrame(diag_list)
-
 
         logger.info("Medical Dialogue data processed.")
         self.processed = True
@@ -59,7 +59,6 @@ class MedDialogueDataset(ChatDataset):
 
         prompts = []
         for _, row in tqdm(med_dialogue.iterrows(), total=med_dialogue.shape[0]):
-
             prompts.append(
                 # inherit from ChatDataset
                 self.unify_prompt(

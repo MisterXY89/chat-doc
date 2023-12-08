@@ -8,8 +8,7 @@ import numpy as np
 import pandas as pd
 from datasets import load_dataset
 from tqdm import tqdm
-
-from transformers import BigBirdPegasusForConditionalGeneration, AutoTokenizer
+from transformers import AutoTokenizer, BigBirdPegasusForConditionalGeneration
 
 from chat_doc.config import logger
 from chat_doc.dataset_generation.chat_dataset import ChatDataset
@@ -91,15 +90,15 @@ class PMCPatientsDataset(ChatDataset):
         # Sample prompt templates
         # templates = [
         #     "Summarize the medical history for a {age}-year-old {gender} patient based on the following summary: {patient_summary}",
-        #     "Explain the treatment options for a patient with this profile: {patient_summary}",            
+        #     "Explain the treatment options for a patient with this profile: {patient_summary}",
         # ]
 
         prompts = []
         for _, row in pmc_data.iterrows():
-            # template = np.random.choice(templates)            
+            # template = np.random.choice(templates)
             age = row.age
-            sex = _str_sex(row['sex'])
-            patient_summary = row['patient']
+            sex = _str_sex(row["sex"])
+            patient_summary = row["patient"]
             instruction_template = f"Identify potential diagnoses for a {age}-year-old {sex} patient presenting these symptoms: {patient_summary}"
 
             prompts.append(
