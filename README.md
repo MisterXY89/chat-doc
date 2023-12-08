@@ -25,24 +25,30 @@ cd chat-doc
 pip install -r requirements.txt
 ```
 
-3. Generate Data:
+3. Set up pre-commit hooks:
+```bash
+pre-commit install
+```
+
+4. Generate Data:
 To generate data for the chatbot, use the following command:
 ```bash
-python pipe.py generate --dataset icd 
+python pipe.py generate --dataset dialogue-full 
 ```
-Replace icd with pmc or full to choose a different dataset.
+Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`.
 
-4. Train the Model:
+5. Train the Model:
 ```bash
-python pipe.py train XXXX
+python pipe.py train --dataset xxx --model xxx
 ```
+Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`, 
+model can be any llama2 model from the [huggingface model hub](https://huggingface.co/meta-llama).
 
 ## Training Results
 The first training results are stored in the [logs](./logs) folder and visualized below:
 ![Training resulst](images/logs-insights-results.png)
 
 ## Run tests
-
 To run the tests, run the following command:
 ```bash
 python -m pytest test
