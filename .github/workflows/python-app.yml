@@ -16,16 +16,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # $CONDA is an environment variable pointing to the root of the miniconda directory
-        $CONDA/bin/conda env update --file environment.yml --name adl
+        conda env update --file environment.yml --name adl
 
     - name: Lint with flake8
       run: |
-        $CONDA/bin/conda install flake8
+        conda install flake8
         # Lint using flake8 with settings from .flake8 file
-        $CONDA/bin/flake8 --config .flake8
+        flake8 --config .flake8
 
     - name: Test with pytest
       run: |
-        $CONDA/bin/conda install pytest
-        $CONDA/bin/pytest
+        conda install pytest
+        pytest
