@@ -5,7 +5,7 @@ channels:
 dependencies:
   - pytorch
   - pip:
-    - huggingface_hub
+    - huggingface-hub==0.19.4 
     - accelerate==0.24.1
     - bitsandbytes==0.41.2.post2
     - boto3==1.28.82
