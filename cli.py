@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # "generate" subcommand
     generate_parser = subparsers.add_parser("generate", help="Generate data")
     generate_parser.add_argument(
-        "--dataset", choices=["pmc", "icd", "full"], required=True, help="Dataset to generate"
+        "--dataset", choices=["pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"], required=True, help="Dataset to generate"
     )
     # generate_parser.add_argument(
     #     "--output_path", default="./data", help="Output path (default: ./data)"
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     # "train" subcommand
     train_parser = subparsers.add_parser("train", help="Train the model")
     train_parser.add_argument(
-        "--dataset", choices=["pmc", "icd", "full"], required=True, help="Dataset to train on"
+        "--dataset", choices=["pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"], required=True, help="Dataset to train on"
     )
     train_parser.add_argument(
         "--base_model",

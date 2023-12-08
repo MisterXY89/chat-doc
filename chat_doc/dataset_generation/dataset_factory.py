@@ -7,44 +7,76 @@ import pandas as pd
 from chat_doc.config import DATA_DIR, ROOT_DIR, logger
 from chat_doc.dataset_generation.icd11_dataset import ICD11Dataset
 from chat_doc.dataset_generation.pmc_patients_dataset import PMCPatientsDataset
+from chat_doc.dataset_generation.diagnose_dataset import DiagnoseDataset
+from chat_doc.dataset_generation.med_dialogue_dataset import MedDialogueDataset
 
 
 class DatasetFactory:
     def __init__(self):
         self.dataset = None
-        self.path = ROOT_DIR + "/data/full_prompts.pkl"
-        self.available_datasets = ["icd", "pmc", "full"]
+        self.full_path = ROOT_DIR + "/data/full_prompts.pkl"
+        self.dialogue_path = ROOT_DIR + "/data/full_dialogue.pkl"
+        self.available_datasets = ["icd", "pmc", "diagnose", "med-dialogue", "dialogue-full", "full"]
+
+    def build_full_dialogue_dataset(self):
+        dialogue_prompts = self.load_dataset("med-dialogue")
+        diagnose_prompts = self.load_dataset("diagnose")
+
+        if dialogue_prompts is None:
+            dialogue_prompts = self.build_dataset("med-dialogue")
+        if diagnose_prompts is None:
+            diagnose_prompts = self.build_dataset("diagnose")
+
+        # combine them
+        prompts = dialogue_prompts + diagnose_prompts
+
+        try:
+            with open(self.dialogue_path, "wb") as f:
+                pickle.dump(prompts, f)
+                logger.info(f"Full prompts saved to {self.dialogue_path}")
+        except Exception as e:
+            logger.error(f"Could not save full prompts to {self.dialogue_path}")
+            logger.error(e)
+
+        return prompts
+    
 
     def build_full_dataset(self):
         # load both datasets, if they don't exist, build them
         icd_prompts = self.load_dataset("icd")
         pmc_prompts = self.load_dataset("pmc")
+        diagnose_prompts = self.load_dataset("diagnose")
+        dialogue_prompts = self.load_dataset("med-dialogue")
 
         if icd_prompts is None:
             icd_prompts = self.build_dataset("icd")
         if pmc_prompts is None:
             pmc_prompts = self.build_dataset("pmc")
+        if diagnose_prompts is None:
+            diagnose_prompts = self.build_dataset("diagnose")
+        if dialogue_prompts is None:
+            dialogue_prompts = self.build_dataset("med-dialogue")
 
         # combine them
-        prompts = icd_prompts + pmc_prompts
+        prompts = icd_prompts + pmc_prompts + diagnose_prompts
 
         try:
-            with open(self.path, "wb") as f:
+            with open(self.full_path, "wb") as f:
                 pickle.dump(prompts, f)
-                logger.info(f"Full prompts saved to {self.path}")
+                logger.info(f"Full prompts saved to {self.full_path}")
         except Exception as e:
-            logger.error(f"Could not save full prompts to {self.path}")
+            logger.error(f"Could not save full prompts to {self.full_path}")
             logger.error(e)
 
         return prompts
 
     def load_full_dataset(self):
         try:
-            with open(self.path, "rb") as f:
+            with open(self.full_path, "rb") as f:
                 prompts = pickle.load(f)
-                logger.info(f"Full prompts loaded from {self.path}")
+                logger.info(f"Full prompts loaded from {self.full_path}")
         except Exception as e:
-            logger.error(f"Could not load full prompts from {self.path}")
+            logger.error(f"Could not load full prompts from {self.full_path}")
             logger.error(e)
             prompts = None
 
@@ -55,6 +87,12 @@ class DatasetFactory:
             self.dataset = ICD11Dataset()
         elif name == "pmc":
             self.dataset = PMCPatientsDataset()
+        elif name == "diagnose":
+            self.dataset = DiagnoseDataset()
+        elif name == "med-dialogue":
+            self.dataset = MedDialogueDataset()
+        elif name == "dialogue-full":
+            self.build_full_dialogue_dataset()
         elif name == "full":
             self.build_full_dataset()
         else:
@@ -82,6 +120,12 @@ class DatasetFactory:
             self.dataset = ICD11Dataset()
         elif name == "pmc":
             self.dataset = PMCPatientsDataset()
+        elif name == "diagnose":
+            self.dataset = DiagnoseDataset()
+        elif name == "med-dialogue":
+            self.dataset = MedDialogueDataset()
+        elif name == "dialogue-full":
+            return self.load_full_dialogue_dataset()
         elif name == "full":
             return self.load_full_dataset()
         else:

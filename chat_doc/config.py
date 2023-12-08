@@ -17,6 +17,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # parent dir of chat_doc (BASE_DIR)
 DATA_DIR = ROOT_DIR + "/data"
 
+SEED = 1160
+
 # Change if you renamed your config filey
 CONFIG_FILE_PATH = f"{BASE_DIR}/config.yml"
 CREDENTIAL_FILE_PATH = f"{BASE_DIR}/.env"
