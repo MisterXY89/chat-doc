@@ -20,7 +20,7 @@ class MedDialogueDataset(ChatDataset):
 
     def load_data(self: str):
         """
-        Load Medical Dialogue data from HF dataset. 
+        Load Medical Dialogue data from HF dataset.
         """
         try:
             raw_dataset = load_dataset(self.med_dialogue_hf_id, self.variant)
@@ -58,13 +58,13 @@ class MedDialogueDataset(ChatDataset):
             med_dialogue = self.dataset.copy()
 
         prompts = []
-        for _, row in tqdm(med_dialogue.iterrows(), total=med_dialogue.shape[0]):                  
+        for _, row in tqdm(med_dialogue.iterrows(), total=med_dialogue.shape[0]):
 
             prompts.append(
                 # inherit from ChatDataset
                 self.unify_prompt(
                     instruction=f"{row['patient']}",
-                    context=f"",
+                    context="",
                     response=f"{row['doctor']}",
                 )
             )

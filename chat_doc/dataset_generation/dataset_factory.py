@@ -39,7 +39,6 @@ class DatasetFactory:
             logger.error(e)
 
         return prompts
-    
 
     def build_full_dataset(self):
         # load both datasets, if they don't exist, build them
@@ -69,7 +68,7 @@ class DatasetFactory:
             logger.error(e)
 
         return prompts
-    
+
     def load_full_dialogue_dataset(self):
         try:
             with open(self.dialogue_path, "rb") as f:

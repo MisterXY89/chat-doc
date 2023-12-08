@@ -81,35 +81,34 @@ class PMCPatientsDataset(ChatDataset):
         logger.info("PMC patients prompts built.")
         self.prompts = prompts
 
-
     def build_prompts(self):
         if self._is_processed():
             pmc_data = self.dataset.copy()
 
         def _str_sex(sex_str: str) -> str:
             return "male" if sex_str == "M" else "female"
-        
+
         # Sample prompt templates
-        templates = [
-            f"Summarize the medical history for a {age}-year-old {gender} patient based on the following summary: {patient_summary}",
-            f"Explain the treatment options for a patient with this profile: {patient_summary}",
-            f"Identify potential diagnoses for a {age}-year-old patient presenting these symptoms: {patient_summary}"
-        ]
+        # templates = [
+        #     "Summarize the medical history for a {age}-year-old {gender} patient based on the following summary: {patient_summary}",
+        #     "Explain the treatment options for a patient with this profile: {patient_summary}",            
+        # ]
 
         prompts = []
-        for _, row in pmc_data.iterrows():            
-            template = np.random.choice(templates)
+        for _, row in pmc_data.iterrows():
+            # template = np.random.choice(templates)            
             age = row.age
-            gender = _str_sex(row['sex'])
+            sex = _str_sex(row['sex'])
             patient_summary = row['patient']
+            instruction_template = f"Identify potential diagnoses for a {age}-year-old {sex} patient presenting these symptoms: {patient_summary}"
 
             prompts.append(
                 # inherit from ChatDataset
                 self.unify_prompt(
-                    instruction=template.format(age=age, gender=gender, patient_summary=patient_summary),
+                    instruction=instruction_template,
                     context="",
                     response=f"{patient_summary}",
                 )
-            )            
+            )
 
         return prompts
