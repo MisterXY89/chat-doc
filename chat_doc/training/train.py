@@ -10,11 +10,10 @@ from chat_doc.training.setup_training import TrainingsSetup
 
 
 class Trainer:
-    def __init__(self, dataset_name, base_model, output_path, hyperparams):
+    def __init__(self, dataset_name, base_model, hyperparams):
         # dataset is name (icd, pmc, full)
         self.dataset_name = dataset_name
         self.base_model = base_model
-        self.output_path = output_path
         self._is_initialized = False
         self._hyperparameters(**hyperparams)
 
@@ -83,7 +82,6 @@ class Trainer:
 
         logger.info(f"Training model on dataset: {self.dataset_name}")
         logger.info(f"Base model: {self.base_model}")
-        logger.info(f"Output path: {self.output_path}")
 
         self._build_training_job()
         data = {"training": self.training_input_path}

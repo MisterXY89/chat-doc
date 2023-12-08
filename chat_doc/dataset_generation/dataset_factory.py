@@ -69,6 +69,18 @@ class DatasetFactory:
             logger.error(e)
 
         return prompts
+    
+    def load_full_dialogue_dataset(self):
+        try:
+            with open(self.dialogue_path, "rb") as f:
+                prompts = pickle.load(f)
+                logger.info(f"Full prompts loaded from {self.dialogue_path}")
+        except Exception as e:
+            logger.error(f"Could not load full dialogue prompts from {self.dialogue_path}")
+            logger.error(e)
+            prompts = None
+
+        return prompts
 
     def load_full_dataset(self):
         try:
