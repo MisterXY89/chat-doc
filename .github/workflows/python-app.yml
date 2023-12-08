@@ -28,3 +28,6 @@ jobs:
       run: |
         conda install pytest
         $CONDA/bin/pytest
+
+env:
+  CACHE_NUMBER: 0  #
