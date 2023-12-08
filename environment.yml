@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - pytorch
   - pip:
     - accelerate==0.24.1
     - bitsandbytes==0.41.2.post2
@@ -37,7 +38,6 @@ dependencies:
     - sagemaker==2.197.0
     - seaborn==0.13.0
     - tokenizers==0.14.1
-    # - torch==2.1.1
     - tqdm==4.66.1
     - transformers==4.35.0
 prefix: /opt/homebrew/anaconda3/envs/adl
