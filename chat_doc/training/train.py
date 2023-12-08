@@ -63,9 +63,9 @@ class Trainer:
         self.dataset = self.dataset_factory.convert_to_hf(dataset_base)
 
         logger.info("Initializing trainer")
-        self.trainings_config = TrainingsSetup()
+        self.trainings_config = TrainingsSetup(self.base_model, self.dataset_name)
         self.trainings_config.setup()
-        self.training_input_path = self.trainings_config.training_input_path(self.dataset_name)
+        self.training_input_path = self.trainings_config.training_input_path()
 
         logger.info("Initializing pre-training processor")
         self.pre_train_processor = PreTrainingProcessor(self.trainings_config.tokenizer)

@@ -35,6 +35,7 @@ class DiagnoseDataset(ChatDataset):
         if self._is_loaded():
             # copy data to avoid changing the original in case of errors
             diagnose_data = self.dataset.copy()
+            diagnose_data = diagnose_data.sample(frac=0.06)
 
         # drop irrelevant columns (id) --> is the same as pd index
         diagnose_data.drop(columns=["id"], inplace=True)
@@ -56,7 +57,7 @@ class DiagnoseDataset(ChatDataset):
             diagnose_data = self.dataset.copy()
 
         # sample 7% of the data --> approx. 15.000 prompts
-        diagnose_data = diagnose_data.sample(frac=0.06).reset_index(drop=True)
+        diagnose_data = diagnose_data.reset_index(drop=True)
 
         prompts = []
         for _, row in tqdm(diagnose_data.iterrows(), total=diagnose_data.shape[0]):                  

@@ -10,8 +10,9 @@ from chat_doc.config import config, logger
 
 
 class TrainingsSetup:
-    def __init__(self, model_id="meta-llama/Llama-2-13b-hf"):  # sharded weights
+    def __init__(self, model_id, dataset_name):  # sharded weights
         self.model_id = model_id
+        self.dataset_name = dataset_name
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, use_auth_token=True)
         self.tokenizer.pad_token = self.tokenizer.eos_token
         logger.info(f"Loaded tokenizer: {self.tokenizer}")
@@ -48,17 +49,23 @@ class TrainingsSetup:
         logger.info("Logged in to Hugging Face Hub.")
         return True
 
-    def training_input_path(self, dataset_name="full"):
+    def training_input_path(self, dataset_name=None):
+        if dataset_name is None:
+            dataset_name = self.dataset_name
         return f"s3://{self.sess.default_bucket()}/processed/llama/{dataset_name}/train"
 
-    def upload_data(self, train_set, dataset_name="full"):
+    def upload_data(self, train_set, dataset_name=None):
+        if dataset_name is None:
+            dataset_name = self.dataset_name
         # save train_dataset to s3
         train_set.save_to_disk(self.training_input_path(dataset_name))
 
         print("uploaded data to:")
         print(f"training dataset to: {self.training_input_path(dataset_name)}")
 
-    def load_data(self, dataset_name="full"):
+    def load_data(self, dataset_name=None):
+        if dataset_name is None:
+            dataset_name = self.dataset_name
         # load train_dataset from s3
         s3_path = self.training_input_path(dataset_name)
         train_set = load_from_disk(s3_path)
