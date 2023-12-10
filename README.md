@@ -1,5 +1,8 @@
 # "Chat-Doc": Fine-tuning Llama2 for a medical chat-app
 
+![example workflow](https://github.com/MisterXY89/chat-doc/actions/workflows/python-app.yml/badge.svg)
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+
 > Author: `Tilman Kerl` <br>
 > Project Type: `Bring your own data` <br>
 > Domain `Natural Language Processing`
@@ -33,7 +36,7 @@ pre-commit install
 4. Generate Data:
 To generate data for the chatbot, use the following command:
 ```bash
-python pipe.py generate --dataset dialogue-full 
+python pipe.py generate --dataset dialogue-full
 ```
 Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`.
 
@@ -41,7 +44,7 @@ Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "di
 ```bash
 python pipe.py train --dataset xxx --model xxx
 ```
-Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`, 
+Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`,
 model can be any llama2 model from the [huggingface model hub](https://huggingface.co/meta-llama).
 
 ## Training Results
@@ -57,8 +60,8 @@ python -m pytest test
 ## Project Structure
 ```
 - pipe.py                  # Main pipeline script for data generation and model training.
-- chat_doc/                 # Contains project conf, logging setup, training, and dataset generation 
-    - data_generation/ 
+- chat_doc/                 # Contains project conf, logging setup, training, and dataset generation
+    - data_generation/
     - training/
     - inference/
 - data/                     # Contains the raw data and the generated data.
