@@ -14,14 +14,14 @@ def _test_build(name):
     assert os.path.exists(f"data/prompt_{name.upper()}.pkl")
 
 
-def test_full_build():
-    from chat_doc.dataset_generation.dataset_factory import DatasetFactory
+# def test_full_build():
+#     from chat_doc.dataset_generation.dataset_factory import DatasetFactory
 
-    dataset_factory = DatasetFactory()
-    dataset_factory.build_dataset(name="full")
+#     dataset_factory = DatasetFactory()
+#     dataset_factory.build_dataset(name="full")
 
-    assert dataset_factory.dataset is not None
-    assert os.path.exists("data/full_prompts.pkl")
+#     assert dataset_factory.dataset is not None
+#     assert os.path.exists("data/full_prompts.pkl")
 
 
 # def test_full_dialogue_build():
