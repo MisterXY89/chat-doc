@@ -20,6 +20,9 @@ def _delete_existing_data():
 def run_around_tests():
     logging.disable(logging.CRITICAL)
 
+    # rename .env.example to .env before running tests
+    os.rename(".env.example", ".env")
+
     # append to path to import from chat_doc
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     _delete_existing_data()
