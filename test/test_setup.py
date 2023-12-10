@@ -2,11 +2,14 @@ import pytest
 
 
 def test_config():
-    # from chat_doc.config import config
+    from chat_doc.config import config
 
-    # required_keys = ["logging", "app", "credentials"]
-    # for key in required_keys:
-    #     assert key in config
+    # "credentials" setup does not make sense as we set .env vars manually
+    # --> see conftest.py
+
+    required_keys = ["logging", "app"]
+    for key in required_keys:
+        assert key in config
 
     assert 1 == 1
 

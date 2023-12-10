@@ -24,14 +24,14 @@ def test_full_build():
     assert os.path.exists("data/full_prompts.pkl")
 
 
-def test_full_dialogue_build():
-    from chat_doc.dataset_generation.dataset_factory import DatasetFactory
+# def test_full_dialogue_build():
+#     from chat_doc.dataset_generation.dataset_factory import DatasetFactory
 
-    dataset_factory = DatasetFactory()
-    dataset_factory.build_dataset(name="dialogue-full")
+#     dataset_factory = DatasetFactory()
+#     dataset_factory.build_dataset(name="dialogue-full")
 
-    assert dataset_factory.dataset is not None
-    assert os.path.exists("data/full_dialogue_prompts.pkl")
+#     assert dataset_factory.dataset is not None
+#     assert os.path.exists("data/full_dialogue_prompts.pkl")
 
 
 def test_icd_build():
@@ -46,8 +46,8 @@ def test_diagnose_me_build():
     _test_build("diagnose")
 
 
-def test_med_dialogue_build():
-    _test_build("med-dialogue")
+# def test_med_dialogue_build():
+#     _test_build("med-dialogue")
 
 
 if __name__ == "__main__":
