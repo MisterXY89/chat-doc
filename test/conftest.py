@@ -16,12 +16,15 @@ def _delete_existing_data():
     print("Deleted existing data")
 
 
+def pytest_generate_tests(metafunc):
+    os.environ["HF_TOKEN"] = "xxx"
+
+
 @pytest.fixture(autouse=True)
 def run_around_tests():
     logging.disable(logging.CRITICAL)
 
-    # rename .env.example to .env before running tests
-    # os.rename(".env.example", ".env")
+    # os.environ.get
 
     # append to path to import from chat_doc
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
