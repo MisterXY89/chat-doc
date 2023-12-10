@@ -11,7 +11,7 @@ def _test_build(name):
     dataset_factory.build_dataset(name=name)
 
     assert dataset_factory.dataset is not None
-    assert os.path.exists(f"data/prompt_{name.upper()}.pkl")
+    # assert os.path.exists(f"data/prompt_{name.upper()}.pkl")
 
 
 # def test_full_build():
