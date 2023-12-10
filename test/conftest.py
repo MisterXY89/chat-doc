@@ -7,6 +7,10 @@ import pytest
 
 def _delete_existing_data():
     data_dir = os.path.join(os.getcwd(), "data")
+    if not os.path.exists(data_dir):
+        os.makedirs(data_dir)
+
+        print("Created data directory")
     for file in os.listdir(data_dir):
         os.remove(os.path.join(data_dir, file))
     print("Deleted existing data")
