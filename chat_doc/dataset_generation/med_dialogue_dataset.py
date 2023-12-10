@@ -12,7 +12,7 @@ from chat_doc.dataset_generation.chat_dataset import ChatDataset
 
 
 class MedDialogueDataset(ChatDataset):
-    def __init__(self, name="med_dialogue"):
+    def __init__(self, name="med-dialogue"):
         super().__init__(name)
         self.variant = "processed.en"
         self.med_dialogue_hf_id = "medical_dialog"

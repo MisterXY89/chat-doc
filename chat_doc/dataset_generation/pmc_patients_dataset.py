@@ -15,7 +15,7 @@ from chat_doc.dataset_generation.chat_dataset import ChatDataset
 
 
 class PMCPatientsDataset(ChatDataset):
-    def __init__(self, name="PMC"):
+    def __init__(self, name="pmc"):
         super().__init__(name)
         self.hf_path = "zhengyun21/PMC-Patients"
 
@@ -53,7 +53,7 @@ class PMCPatientsDataset(ChatDataset):
         self.processed = True
         self.dataset = pmc_data
 
-    def __build_prompts(self):
+    def build_prompts(self):
         if self._is_processed():
             pmc_data = self.dataset.copy()
 
@@ -80,7 +80,7 @@ class PMCPatientsDataset(ChatDataset):
         logger.info("PMC patients prompts built.")
         self.prompts = prompts
 
-    def build_prompts(self):
+    def __next_build_prompts(self):
         if self._is_processed():
             pmc_data = self.dataset.copy()
 

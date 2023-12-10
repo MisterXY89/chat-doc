@@ -11,7 +11,7 @@ from chat_doc.dataset_generation.chat_dataset import ChatDataset
 
 
 class ICD11Dataset(ChatDataset):
-    def __init__(self, name="ICD"):
+    def __init__(self, name="icd"):
         super().__init__(name)
         self.icd11_path = BASE_DIR + "/data/pinglab-ICD11-data.json"
 

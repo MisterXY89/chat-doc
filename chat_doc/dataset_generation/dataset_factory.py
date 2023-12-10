@@ -5,18 +5,25 @@ import datasets
 import pandas as pd
 
 from chat_doc.config import DATA_DIR, ROOT_DIR, logger
-from chat_doc.dataset_generation.icd11_dataset import ICD11Dataset
-from chat_doc.dataset_generation.pmc_patients_dataset import PMCPatientsDataset
 from chat_doc.dataset_generation.diagnose_dataset import DiagnoseDataset
+from chat_doc.dataset_generation.icd11_dataset import ICD11Dataset
 from chat_doc.dataset_generation.med_dialogue_dataset import MedDialogueDataset
+from chat_doc.dataset_generation.pmc_patients_dataset import PMCPatientsDataset
 
 
 class DatasetFactory:
     def __init__(self):
         self.dataset = None
         self.full_path = ROOT_DIR + "/data/full_prompts.pkl"
-        self.dialogue_path = ROOT_DIR + "/data/full_dialogue.pkl"
-        self.available_datasets = ["icd", "pmc", "diagnose", "med-dialogue", "dialogue-full", "full"]
+        self.dialogue_path = ROOT_DIR + "/data/full_dialogue_prompts.pkl"
+        self.available_datasets = [
+            "icd",
+            "pmc",
+            "diagnose",
+            "med-dialogue",
+            "dialogue-full",
+            "full",
+        ]
 
     def build_full_dialogue_dataset(self):
         dialogue_prompts = self.load_dataset("med-dialogue")
@@ -56,8 +63,12 @@ class DatasetFactory:
         if dialogue_prompts is None:
             dialogue_prompts = self.build_dataset("med-dialogue")
 
+        print(len(icd_prompts))
+        print(len(pmc_prompts))
+        print(len(diagnose_prompts))
+        print(len(dialogue_prompts))
         # combine them
-        prompts = icd_prompts + pmc_prompts + diagnose_prompts
+        prompts = icd_prompts + pmc_prompts + diagnose_prompts + dialogue_prompts
 
         try:
             with open(self.full_path, "wb") as f:
