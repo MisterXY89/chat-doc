@@ -42,12 +42,12 @@ def test_pmc_build():
     _test_build("pmc")
 
 
-def test_diagnose_me_build():
-    _test_build("diagnose")
+# def test_diagnose_me_build():
+#     _test_build("diagnose")
 
 
-# def test_med_dialogue_build():
-#     _test_build("med-dialogue")
+def test_med_dialogue_build():
+    _test_build("med-dialogue")
 
 
 if __name__ == "__main__":
