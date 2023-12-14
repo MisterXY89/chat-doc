@@ -52,7 +52,8 @@ class SageMakerDeployment:
         )
 
 
-# Usage
-s3_model_uri = "s3://sagemaker-eu-central-1-228610994900/huggingface-qlora-2023-12-08-15-01-13-2023-12-08-15-01-14-300/output/model.tar.gz"
-deployment = SageMakerDeployment(s3_model_uri)
-llm_endpoint = deployment.deploy_model()
+if __name__ == "__main__":
+    # Usage
+    s3_model_uri = "s3://sagemaker-eu-central-1-228610994900/huggingface-qlora-2023-12-08-15-01-13-2023-12-08-15-01-14-300/output/model.tar.gz"
+    deployment = SageMakerDeployment(s3_model_uri)
+    llm_endpoint = deployment.deploy_model()
