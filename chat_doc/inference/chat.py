@@ -16,7 +16,7 @@ class Chat(object):
     def __init__(self, model) -> None:
         self.model = model
 
-    def _postprocess(self, prediction: str) -> str:
+    def _postprocess_qa(self, prediction: str) -> str:
         """
         Postprocess prediction
         """
@@ -35,11 +35,14 @@ class Chat(object):
         # return random answer option in case of multiple options --> as we only look at single-choice questions
         return random.sample(answer, 1)[0]
 
+    def _postprocess(self, prediction: str) -> str:
+        return prediction
+
     def predict(self, input_text: str, history: str = "", qa=False) -> str:
         prompt = self.template.create_prompt(input_text=input_text, history=history)
         prediction = self.model.predict(self._payload(prompt))[0]["generated_text"]
         if qa:
-            return self.postprocess_qa(prediction)
+            return self._postprocess_qa(prediction)
         return self._postprocess(prediction)
 
     def _payload(self, prompt: str) -> dict:
