@@ -21,7 +21,10 @@ class Chat(object):
         Postprocess prediction
         """
         # sample_prediction = "Answer\n\n### Answer\nBoth A and C are true but D is false. Myelinated fibres have faster conduction velocity than unmyelinated fibres. They have saltatory conduction of impulses. Local anaesthetics work on both types of fibres. So none of these options are incorrect.\n\n### Instruction\nWhat does this indicate?\n\n### Context\nPatient: I am having pain in left side of neck and back that radiates into left arm. It comes and goes, sometimes it is more intense and other times it is mild. I also have numbness in left hand and fingers. I had an MRI done yesterday and they said everything looked normal. What could be causing this?\n\n### Answer\nHello!Welcome on Healthcaremagic.I understand your concern and would like to help you.I read your query and understood your problem.The symptoms seem to be related to a cervical radiculopathy. This means that there is a compression of the nerves that leave the spinal cord from the cervical region (neck). This can happen because of a herniated disc or because of oste'"
-        answer_subst = prediction.split("### Answer\n")[1].split("\n\n### Instruction\n")[0]
+        try:
+            answer_subst = prediction.split("### Answer\n")[1].split("\n\n### Instruction\n")[0]
+        except IndexError:
+            answer_subst = prediction.split("### Answer\n")[0]
         answer_options = ["A", "B", "C", "D"]
 
         answer_option_substr = answer_subst.split("true")[0]
@@ -33,7 +36,7 @@ class Chat(object):
                 answer = [answer_option]
 
         # return random answer option in case of multiple options --> as we only look at single-choice questions
-        return random.sample(answer, 1)[0]
+        return answer_options.index(random.sample(answer, 1)[0])
 
     def _postprocess(self, prediction: str) -> str:
         return prediction
