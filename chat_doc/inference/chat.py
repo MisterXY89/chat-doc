@@ -68,27 +68,32 @@ class Chat(object):
 
     def predict(self, input_text: str, history: str = "", qa=False) -> str:
         prompt = self.template.create_prompt(input_text=input_text, history=history)
-        prediction = self.model.predict(self._payload(prompt))[0]["generated_text"]
+        prediction = self.model.predict(self._payload(prompt), qa=qa)[0]["generated_text"]
+
         if qa:
             return self._postprocess_qa(prediction)
         return self._postprocess(prediction)
 
-    def _payload(self, prompt: str) -> dict:
+    def _payload(self, prompt: str, qa: bool) -> dict:
         """
         Create payload for inference
         """
-        return {
+        payload = {
             "inputs": prompt,
             "parameters": {
                 "do_sample": True,
-                # "do_sample": False,
                 "top_p": 0.92,
                 "temperature": 0.5,
                 "top_k": 500,
                 "max_new_tokens": 256,
-                # "max_new_tokens": 512,
                 "repetition_penalty": 1.1,
-                # "stop": ["<|end|>"]
                 "stop": ["<</SYS>>"],
             },
         }
+        # override parameters for qa --> single-choice questions
+        if qa:
+            payload["parameters"]["do_sample"] = False
+            payload["parameters"]["top_k"] = 300
+            payload["parameters"]["max_new_tokens"] = 64
+
+        return payload
