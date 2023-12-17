@@ -1,14 +1,92 @@
 # Milestone 2 - Hacking
 
+## Table of Contents
+<!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
+- [Milestone 2 - Hacking](#milestone-2---hacking)
+  - [Table of Contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+  - [2. Methodology](#2-methodology)
+    - [Data Collection/generation](#data-collectiongeneration)
+    - [Data Preprocessing](#data-preprocessing)
+    - [Model Training](#model-training)
+  - [3. Results](#3-results)
+    - [Model](#model)
+    - [Qualitative Evaluation](#qualitative-evaluation)
+      - [Question 1](#question-1)
+        - [ChatDoc](#chatdoc)
+        - [GTP-4](#gtp-4)
+      - [Question 2](#question-2)
+        - [ChatDoc](#chatdoc-1)
+        - [GTP-4](#gtp-4-1)
+        - [llama-7b-chat](#llama-7b-chat)
+    - [Quantitative Results](#quantitative-results)
+      - [Methodology](#methodology)
+      - [Results](#results)
+
 ## 1. Introduction
+This document accompanies Milestone 2 - 'Hacking', and provides an in-depth exploration of our efforts to fine-tune llama2 for the specialized applications in medical diagnostics and advice.
+We start of with a general methodology section, delineating the processes of data collection, preprocessing, and model training, before presenting the results of our efforts in the final section.
+
+## 2. Methodology
+
+### Data Collection/generation
+As the data and its quality is quite crucial for the performance of the fine-tuned model, we put a lot of effort into the data collection and preprocessing and the setup of the data pipeline.
+To guarantee maintainability and extensibility, we implemented a factory pattern, coupled with a modularized OOP approach, to ensure that the data pipeline can be easily extended and adapted to new data sources.
+
+The data collection/generation is implemented in the [chat_doc/data_generation](chat_doc/data_generation) folder.
+
+We prepared and implemented the following data sources:
+- [ICD-11](https://icd.who.int/browse11/l-m/en) (orignially proposed)
+- [MedMCQA](https://huggingface.co/datasets/medmcqa/viewer/default/validation)
+- [PMC Patients](https://huggingface.co/datasets/zhengyun21/PMC-Patients)
+- ... EXTEND
+
+### Data Preprocessing
+
+xx
+
+### Model Training
+<!-- two runs -->
+As of now, we have trained two models, the first (13B) on the ICD-11 dataset and the other (7B) one on the XXX dataset.
+
+The training is implemented in the [chat_doc/training](chat_doc/training) folder.
+
+Using the CLI, the training can be started as follows:
+```bash
+python cli.py train --dataset icd11 --model llama-13b --epochs 3
+```
+
+The first training run was more of a proof-of-concept and test-run to see if the 13B parameter version of llama2 is suitable for our task or if the 7B parameter version is sufficient.
+
+Please see the table below for a comparison of the two models.
+
+| Model | Dataset | Dataset Size | Epochs | Batch Size | Training Time | GPU Memory | GPU | Training Loss |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| llama-13b | ICD-11 | XXX | 3 | 2 | XXXX | XXX | XXX | 0.0001 |
+| llama-7b | XXX | XXX | 2 | 3 | XXXX | XXX | XXX | 0.0001 |
+
+## 3. Results
+
+### Model
+The final model is available on [HuggingFace](https://huggingface.co/MisterXY89/chat-doctor).
+Write me a message if you want to get access to the model.
+
+Once you are approved, you can use the huggingface library to load the model.
+> **NOTE**: The model needs a GPU to run, minimum 16GB of RAM and 8GB of GPU memory.
+```python
+from transformers import pipeline
+
+pipe = pipeline("text-generation", model="MisterXY89/chat-doctor")
+
+pipe("Hi, I feel dizzy and have a headache for a few days already. Should I go the doctor?")
+```
 
 
-## Results
 
 ### Qualitative Evaluation
 
-We compare the generated responses from GPT-4 [llava-7b-chat (perplexity.ai)](https://labs.perplexity.ai/) and ChatDoc.
-We use the following questions to evaluate the responses.
+For the qualitative evaluation, we use a set of questions and compare the generated responses from the fine-tuned model with the responses from GPT-4 to get a qaualitative feeling of the quality of the fine-tuned model.
+A full list of questions and responses can be found in the [evaluation](evaluation) folder, here are only two examples.
 
 #### Question 1
 "Hi, I feel dizzy and have a headache for a few days already. Should I go the doctor?"

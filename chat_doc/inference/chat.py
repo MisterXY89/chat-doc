@@ -18,30 +18,30 @@ class Chat(object):
     def __init__(self, model) -> None:
         self.model = model
 
-    def _postprocess_qa(self, prediction: str) -> str:
+    def _postprocess_qa(self, prediction: str, options: list) -> str:
         """
         Extracts the answer from the prediction string.
         """
-        # sample_prediction = "Answer\n\n### Answer\nBoth A and C are true but D is false. Myelinated fibres have faster conduction velocity than unmyelinated fibres. They have saltatory conduction of impulses. Local anaesthetics work on both types of fibres. So none of these options are incorrect.\n\n### Instruction\nWhat does this indicate?\n\n### Context\nPatient: I am having pain in left side of neck and back that radiates into left arm. It comes and goes, sometimes it is more intense and other times it is mild. I also have numbness in left hand and fingers. I had an MRI done yesterday and they said everything looked normal. What could be causing this?\n\n### Answer\nHello!Welcome on Healthcaremagic.I understand your concern and would like to help you.I read your query and understood your problem.The symptoms seem to be related to a cervical radiculopathy. This means that there is a compression of the nerves that leave the spinal cord from the cervical region (neck). This can happen because of a herniated disc or because of oste'"
-        try:
-            answer_subst = prediction.split("### Answer\n")[1].split("\n\n### Instruction\n")[0]
-        except IndexError:
-            answer_subst = prediction.split("### Answer\n")[0]
+        print(prediction)
         answer_options = ["A", "B", "C", "D"]
 
-        answer_option_substr = answer_subst.split("true")[0]
+        for opt_idx, opt in enumerate(options):
+            if opt in prediction:
+                return opt_idx
 
-        # choose random answer option if none of the options are found (fallback)
-        answer = random.sample(answer_options, 1)
-        for answer_option in answer_options:
-            if answer_option_substr.find(answer_option) != -1:
-                answer = [answer_option]
+        for answer_idx, answer_opt in enumerate(answer_options):
+            answer_opt_str_1 = f" {answer_opt} "
+            answer_opt_str_2 = f"{answer_opt})"
+            if answer_opt_str_1 in prediction or answer_opt_str_2 in prediction:
+                return answer_idx
 
-        # return random answer option in case of multiple options --> as we only look at single-choice questions
-        return answer_options.index(random.sample(answer, 1)[0])
+        return random.randint(0, 3)
 
     def _postprocess(self, prediction: str) -> str:
-        cleaned_pred = prediction.split("###")[1].split("\n")[1].strip()
+        try:
+            cleaned_pred = prediction.split("###")[1].split("\n")[1].strip()
+        except IndexError:
+            cleaned_pred = prediction.strip()
 
         # replace all hyperlinks with "Llama Hospital" using regex
         # regex from https://gist.github.com/gruber/8891611
@@ -67,12 +67,20 @@ class Chat(object):
 
         return cleaned_pred
 
-    def predict(self, input_text: str, history: str = "", qa=False) -> str:
+    def predict(self, input_text: str, history: str = "", qa=False, row=None) -> str:
+        print(input_text)
         prompt = self.template.create_prompt(input_text=input_text, history=history)
         prediction = self.model.predict(self._payload(prompt, qa=qa))[0]["generated_text"]
 
         if qa:
-            return self._postprocess_qa(prediction)
+            answer = self._postprocess_qa(
+                self._postprocess(prediction), options=[row.opa, row.opb, row.opc, row.opd]
+            )
+            print("----")
+            print(answer)
+            print(row.cop)
+            print("---------------")
+            return answer
         return self._postprocess(prediction)
 
     def _payload(self, prompt: str, qa: bool) -> dict:
@@ -94,7 +102,9 @@ class Chat(object):
         # override parameters for qa --> single-choice questions
         if qa:
             payload["parameters"]["do_sample"] = False
-            payload["parameters"]["top_k"] = 300
+            payload["parameters"]["top_p"] = 0.99
+            payload["parameters"]["top_k"] = 200
             payload["parameters"]["max_new_tokens"] = 64
+            payload["parameters"]["temperature"] = 0.1
 
         return payload
