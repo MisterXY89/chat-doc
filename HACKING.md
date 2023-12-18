@@ -9,6 +9,7 @@
     - [Data Collection/generation](#data-collectiongeneration)
     - [Data Preprocessing](#data-preprocessing)
     - [Model Training](#model-training)
+    - [Inference](#inference)
   - [3. Results](#3-results)
     - [Model](#model)
     - [Qualitative Evaluation](#qualitative-evaluation)
@@ -46,6 +47,11 @@ We prepared and implemented the following data sources:
 xx
 
 ### Model Training
+As training times are quite long and the necessary GPU memory is high, we use AWS to train the model.
+Because the training is quite expensive with ~ 2.5$ per hour, hyperparameter optimization is not feasible for the scope of this project.
+To still provide some form of optimization, we perform prompt-engineering & -tuning to optimize the model for our specific task.
+Additionally, we also provide and collect multiple data sources for future training and optimization.
+
 <!-- two runs -->
 As of now, we have trained two models, the first (13B) on the ICD-11 dataset and the other (7B) one on the XXX dataset.
 
@@ -64,6 +70,10 @@ Please see the table below for a comparison of the two models.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | llama-13b | ICD-11 | XXX | 3 | 2 | XXXX | XXX | XXX | 0.0001 |
 | llama-7b | XXX | XXX | 2 | 3 | XXXX | XXX | XXX | 0.0001 |
+
+### Inference
+The inference is implemented in the [chat_doc/inference](chat_doc/inference) folder.
+xxx
 
 ## 3. Results
 
