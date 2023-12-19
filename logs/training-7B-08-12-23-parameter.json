@@ -1,0 +1,19 @@
+{
+    "date": "2023-12-08",
+    "instance_type": "ml.g5.4xlarge",
+    "instance_count": 1,
+    "hyperparameters": {
+        "epochs": 2,
+        "per_device_train_batch_size": 3,
+        "learning_rate": 0.0002,
+        "weight_decay": 0.01
+    },
+    "loss_function": "cross_entropy",
+    "model": "Llama-2-7b-hf",
+    "result": {
+        "final_loss": 1.8428,
+        "start_loss": 2.2933,
+        "training_time_sec": 18062,
+        "logs": "logs/training-log-events-7B-08-12-23.csv"
+    }
+}
