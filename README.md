@@ -43,15 +43,18 @@ python pipe.py generate --dataset dialogue-full
 Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`.
 
 5. Train the Model:
+   Training is done on AWS SageMaker, you can use the CLI to start the training:
 ```bash
 python pipe.py train --dataset xxx --model xxx
 ```
 Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`,
 model can be any llama2 model from the [huggingface model hub](https://huggingface.co/meta-llama).
 
+Alternativly, you can use the `sage_maker_training.ipynb` notebook and configure the training job there.
+
 ## Training Results
 The first training results are stored in the [logs](./logs) folder and visualized below:
-![Training resulst](images/logs-insights-results.png)
+![Training results 13B](/images/results-13B-28-11-23.png)
 
 ## Run tests
 To run the tests, run the following command:
