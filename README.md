@@ -23,9 +23,11 @@ git clone https://github.com/MisterXY89/chat-doc.git
 cd chat-doc
 ```
 
-2. Install Dependencies:
+2. Install Dependencies (during dev I used conda):
 ```bash
-pip install -r requirements.txt
+# conda
+conda env create -f environment.yml
+conda activate chat-doc
 ```
 
 3. Set up pre-commit hooks:

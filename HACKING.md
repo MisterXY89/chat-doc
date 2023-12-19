@@ -1,8 +1,53 @@
 # Milestone 2 - Hacking
 
+# LoRA Config
+peft_parameters = LoraConfig(
+    lora_alpha=16,
+    lora_dropout=0.1,
+    r=8,
+    bias="none",
+    task_type="CAUSAL_LM"
+)
+# Training Params
+train_params = TrainingArguments(
+    output_dir="./results_modified",
+    num_train_epochs=1,
+    per_device_train_batch_size=4,
+    gradient_accumulation_steps=1,
+    optim="paged_adamw_32bit",
+    save_steps=25,
+    logging_steps=25,
+    learning_rate=2e-4,
+    weight_decay=0.001,
+    fp16=False,
+    bf16=False,
+    max_grad_norm=0.3,
+    max_steps=-1,
+    warmup_ratio=0.03,
+    group_by_length=True,
+    lr_scheduler_type="constant"
+)
+# Trainer
+fine_tuning = SFTTrainer(
+    model=base_model,
+    train_dataset=training_data,
+    peft_config=peft_parameters,
+    dataset_text_field="text",
+    tokenizer=llama_tokenizer,
+    args=train_params
+)
+# Training
+fine_tuning.train()
+# Save Model
+
 ## Table of Contents
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 - [Milestone 2 - Hacking](#milestone-2---hacking)
+- [LoRA Config](#lora-config)
+- [Training Params](#training-params)
+- [Trainer](#trainer)
+- [Training](#training)
+- [Save Model](#save-model)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. Methodology](#2-methodology)
