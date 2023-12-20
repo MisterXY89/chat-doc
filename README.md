@@ -24,7 +24,7 @@ The final model is available on [HuggingFace](https://huggingface.co/MisterXY89/
 Write me a message if you want to get access to the model.
 
 Once you are approved, you can use the huggingface library to load the model.
-> **NOTE**: The model needs a GPU to run, minimum 16GB of RAM and 8GB of GPU memory.
+> **NOTE**: The model needs a GPU to run, minimum 16GB of GPU memory.
 ```python
 from transformers import pipeline
 
