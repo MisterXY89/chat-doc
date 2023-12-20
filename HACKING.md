@@ -25,6 +25,7 @@
     - [Quantitative Results](#quantitative-results)
       - [Methodology](#methodology)
       - [Results](#results)
+  - [Time-spent](#time-spent)
   - [Conclusion](#conclusion-1)
 
 ## 1. Introduction
@@ -308,6 +309,21 @@ As we can see, the model performs quite poorly on the task.
 This is quite counter-intuitive as the model should be able to answer the questions correctly and performs quite well on the qualitative evaluation.
 A reason for this could be that the model is not able to generalize well and overfits to the training data.
 Furhter investigation is needed to find the root cause of this problem.
+
+## Time-spent
+
+| WOY | Days | Task |
+| --- | --- | --- |
+| 42 - 43 | 1 | Setup |
+| 43 - 45 | 3 | Collect and parse data from ICD-11 |
+| 45 - 49 | 1 | Train Llama2 using QLoRA v1 |
+| 43 - 45 | 1 | Collect additional data |
+| 45 - 49 | 1 | Train Llama2 using QLoRA v2 |
+| 01 - 03 | 0.5 | Report |
+| $\sum$ | 8 |  |
+
+8 days $\approx$ 64 hours with 8 hours per day.
+We spent around 8 days on this milestone. Thus we are still (more or less) on track with our initial plan.
 
 
 ## Conclusion
