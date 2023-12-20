@@ -17,7 +17,7 @@ class ChatDataset(object):
         self.dataset is a pandas DataFrame --> we use the pickle format to save it and keep the structure
         """
         path = DATA_DIR
-        if prompt:
+        if prompt:  # train ready prompts
             try:
                 with open(
                     f"{path}/{self._is_prompt_fn()}{self.name}{self._get_affix(fn_affix)}.pkl", "wb"
@@ -26,7 +26,7 @@ class ChatDataset(object):
                 logger.info(f"Dataset {self.name} saved to file.")
             except Exception as e:
                 logger.error(f"Error saving dataset: {e}")
-        else:
+        else:  # save the processed dataset (-> as df)
             try:
                 self.dataset.to_pickle(
                     f"{path}/{self._is_prompt_fn()}{self.name}{self._get_affix(fn_affix)}.pkl"
@@ -69,11 +69,6 @@ class ChatDataset(object):
     def unify_prompt(self, instruction, response, context=""):
         """
         Unify the prompt format for all datasets for instruct tuning.
-
-        Args:
-            instruction (str): instruction text
-            response (str): response text
-            context (str): context text (optional)
 
         Returns:
             str: multiline unified prompt string

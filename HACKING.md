@@ -1,59 +1,16 @@
 # Milestone 2 - Hacking
 
-# LoRA Config
-peft_parameters = LoraConfig(
-    lora_alpha=16,
-    lora_dropout=0.1,
-    r=8,
-    bias="none",
-    task_type="CAUSAL_LM"
-)
-# Training Params
-train_params = TrainingArguments(
-    output_dir="./results_modified",
-    num_train_epochs=1,
-    per_device_train_batch_size=4,
-    gradient_accumulation_steps=1,
-    optim="paged_adamw_32bit",
-    save_steps=25,
-    logging_steps=25,
-    learning_rate=2e-4,
-    weight_decay=0.001,
-    fp16=False,
-    bf16=False,
-    max_grad_norm=0.3,
-    max_steps=-1,
-    warmup_ratio=0.03,
-    group_by_length=True,
-    lr_scheduler_type="constant"
-)
-# Trainer
-fine_tuning = SFTTrainer(
-    model=base_model,
-    train_dataset=training_data,
-    peft_config=peft_parameters,
-    dataset_text_field="text",
-    tokenizer=llama_tokenizer,
-    args=train_params
-)
-# Training
-fine_tuning.train()
-# Save Model
-
 ## Table of Contents
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 - [Milestone 2 - Hacking](#milestone-2---hacking)
-- [LoRA Config](#lora-config)
-- [Training Params](#training-params)
-- [Trainer](#trainer)
-- [Training](#training)
-- [Save Model](#save-model)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. Methodology](#2-methodology)
     - [Data Collection/generation](#data-collectiongeneration)
     - [Data Preprocessing](#data-preprocessing)
     - [Model Training](#model-training)
+      - [Loss-Function](#loss-function)
+      - [Prompt Engineering and Tuning](#prompt-engineering-and-tuning)
     - [Inference](#inference)
   - [3. Results](#3-results)
     - [Model](#model)
@@ -64,7 +21,7 @@ fine_tuning.train()
       - [Question 2](#question-2)
         - [ChatDoc](#chatdoc-1)
         - [GTP-4](#gtp-4-1)
-        - [llama-7b-chat](#llama-7b-chat)
+      - [Conclusion](#conclusion)
     - [Quantitative Results](#quantitative-results)
       - [Methodology](#methodology)
       - [Results](#results)
@@ -82,14 +39,35 @@ To guarantee maintainability and extensibility, we implemented a factory pattern
 The data collection/generation is implemented in the [chat_doc/data_generation](chat_doc/data_generation) folder.
 
 We prepared and implemented the following data sources:
-- [ICD-11](https://icd.who.int/browse11/l-m/en) (orignially proposed)
-- [MedMCQA](https://huggingface.co/datasets/medmcqa/viewer/default/validation)
+- [ICD-11](https://icd.who.int/browse11/l-m/en) (orignially proposed, see data description in [INITIATE.md](/INITIATE.md)
+<!-- - [MedMCQA](https://huggingface.co/datasets/medmcqa/viewer/default/validation)-->
 - [PMC Patients](https://huggingface.co/datasets/zhengyun21/PMC-Patients)
-- ... EXTEND
+    > PMC-Patients is a first-of-its-kind dataset consisting of 167k patient summaries extracted from case reports in PubMed Central (PMC), 3.1M patient-article relevance and 293k patient-patient similarity annotations defined by PubMed citation graph.
+- [Diagnose-Me](https://www.kaggle.com/datasets/dsxavier/diagnoise-me)
+    > Diagnose me is an LFQA dataset of dialogues between patients and doctors based on factual conversations from icliniq.com and healthcaremagic.com that aims to collect more than 257k of different questions and prescriptions for patients.
+- [med-dialogue](https://huggingface.co/datasets/medical_dialog)
+    > The MedDialog dataset (English) contains conversations (in English) between doctors and patients. It has 0.26 million dialogues. The data is continuously growing and more dialogues will be added. The raw dialogues are from healthcaremagic.com and icliniq.com. All copyrights of the data belong to healthcaremagic.com and icliniq.com.
+
+    Tis dataset however only has 400ish english dialogues, in contrast to the 260k dialogues mentioned in the description.
 
 ### Data Preprocessing
+Data Processing mostly consists of cleaning the data from e.g. links etc. and formatting it in a way that the model can understand it.
+This means building prompts and adding special tokens to the data:
 
-xx
+```python
+instruction = f"### Instruction\n{instruction}"
+context = f"### Context\n{context}" if len(context) > 0 else None
+response = f"### Answer\n{response}"
+# join all the parts together
+prompt = "\n\n".join([i for i in [instruction, context, response] if i is not None])
+return {
+    "text": prompt,
+}
+```
+
+No further preprocessing is necessary as the model is trained on the raw prompts.
+
+See the respective dataset classes for more details.
 
 ### Model Training
 As training times are quite long and the necessary GPU memory is high, we use AWS to train the model.
@@ -98,7 +76,7 @@ To still provide some form of optimization, we perform prompt-engineering & -tun
 Additionally, we also provide and collect multiple data sources for future training and optimization.
 
 <!-- two runs -->
-As of now, we have trained two models, the first (13B) on the ICD-11 dataset and the other (7B) one on the XXX dataset.
+As of now, we have trained two models, the first (13B) on the ICD-11 dataset and the other (7B) one on the "dialogue-full" dataset.
 
 The training is implemented in the [chat_doc/training](chat_doc/training) folder.
 
@@ -111,19 +89,83 @@ The first training run was more of a proof-of-concept and test-run to see if the
 
 Please see the table below for a comparison of the two models.
 
-| Model | Dataset | Dataset Size | Epochs | Batch Size | Training Time | GPU Memory | GPU | Training Loss |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| llama-13b | ICD-11 | XXX | 3 | 2 | XXXX | XXX | XXX | 0.0001 |
-| llama-7b | XXX | XXX | 2 | 3 | XXXX | XXX | XXX | 0.0001 |
+| Model | Dataset |  Epochs | Batch Size | Training Time | GPU | Training Loss |
+| --- | --- | --- |  --- | --- | --- | --- | --- |
+| llama-13b | ICD-11 |  3 | 2 | 18062 | NVIDIA A10G - 24GB | 0.0611 |
+| llama-7b | dialogue-full |  2 | 3 | 18062 | NVIDIA A10G - 24GB | 1.8428 |
+
+#### Loss-Function
+The default loss function for the llama2 model is the cross-entropy loss function. We did not change it as cross-entropy is a widely-used loss function for fine-tuning language models (LLMs) because it effectively measures the difference between the predicted probability distribution and the actual distribution of the target data. This loss function is particularly advantageous for LLMs as it emphasizes learning from incorrect predictions, thereby driving the model to produce outputs that closely align with the expected human language patterns.
+
+#### Prompt Engineering and Tuning
+As hyperparameter optimization was not feasible for the scope of this project, we focused on prompt-engineering & -tuning to optimize the model for our specific task.
+
+Every time we run inference on the model, we can pass the following parameters to the model:
+```python
+payload = {
+    "inputs": prompt,
+    "parameters": {
+        # enables sampling from the model's output probability distribution,
+        # rather than just taking the most likely output.
+        "do_sample": True,
+        # Nucleus sampling: Only considers the top 92% of the probability distribution for sampling.
+        # Helps in avoiding repetition and encourages more diverse outputs.
+        "top_p": 0.92,
+        # Controls the randomness in the output generation.
+        # A lower value (like 0.5) makes the model's outputs more deterministic.
+        "temperature": 0.5,
+        # Limits the sampling pool to the top 500 most likely next words.
+        # Helps in focusing the generation process.
+        "top_k": 500,
+         # Sets the maximum length of the new tokens generated in response to the prompt.
+        "max_new_tokens": 256,
+        # Applies a penalty for repeating the same token, making it slightly less likely to repeat words.
+        "repetition_penalty": 1.1,
+        # Specifies a stop token at which the model will cease generating further tokens.^
+        "stop": ["<</SYS>>"],
+    },
+}
+```
+
+The prompt looks like this:
+```python
+"<s>[INST] <<SYS>>
+$system_prompt<<SYS>>
+###
+
+Previous Conversation:
+'''
+$history
+'''
+
+$input[/INST]
+
+"""
+```
+with the system prompt being:
+```python
+"""As Doctor Chad, your role is to carefully assess the patient's condition based on their description.
+You are an experienced physician at Lama Hospital, known for your attention to detail and thorough approach.
+When responding, remember to maintain your professional demeanor as Doctor Chad. Ask clarifying questions if the patient's description is not clear or incomplete.
+Your goal is to provide a thoughtful, step-by-step assessment, keeping in mind the best practices of medical consultation. Let's proceed with the patient's query:"""
+```
+
+With this structure of the prompt, with clear delineations for instructions ([INST]), system prompt, and previous conversation history, we ensure an organized and contextually aware interaction.
+This format helps in maintaining continuity and relevance in the conversation, particularly important in a medical consultation scenario.
+
+Further, the system prompt itself is written to embody the persona of "Doctor Chad," an experienced physician.
+It sets a professional tone and outlines specific behavioral guidelines, like asking clarifying questions and providing a step-by-step assessment, which are crucial for realistic and responsible medical dialogue simulation.
 
 ### Inference
 The inference is implemented in the [chat_doc/inference](chat_doc/inference) folder.
-xxx
+For our purposes, we deployed an endpoint on AWS SageMaker to serve the model an run inference on the data.
 
 ## 3. Results
 
+The first model (13B) unfortunately overfits to the training data and is not able to generalize well, thus we decided to train a second model (7B) on a different dataset and will not be evaluating the first model further.
+
 ### Model
-The final model is available on [HuggingFace](https://huggingface.co/MisterXY89/chat-doctor).
+The final (7B) model is available on [HuggingFace](https://huggingface.co/MisterXY89/chat-doctor).
 Write me a message if you want to get access to the model.
 
 Once you are approved, you can use the huggingface library to load the model.
@@ -141,7 +183,7 @@ pipe("Hi, I feel dizzy and have a headache for a few days already. Should I go t
 ### Qualitative Evaluation
 
 For the qualitative evaluation, we use a set of questions and compare the generated responses from the fine-tuned model with the responses from GPT-4 to get a qaualitative feeling of the quality of the fine-tuned model.
-A full list of questions and responses can be found in the [evaluation](evaluation) folder, here are only two examples.
+A full list of questions and responses will be found at the end of the project in the [evaluation](evaluation) folder, here are only two examples for now.
 
 #### Question 1
 "Hi, I feel dizzy and have a headache for a few days already. Should I go the doctor?"
@@ -152,8 +194,6 @@ A full list of questions and responses can be found in the [evaluation](evaluati
 ##### GTP-4
 > I'm not a medical professional, but experiencing dizziness and a headache for several days can be concerning. It's important to consult a healthcare provider to get a proper diagnosis and treatment. These symptoms could be caused by a variety of factors, ranging from minor issues to more serious conditions. A doctor will be able to conduct the necessary examinations and provide you with the appropriate advice and care. If your symptoms are severe, worsening, or accompanied by other symptoms like vision changes, difficulty speaking, or weakness, you should seek medical attention immediately.
 
-<!-- ##### llama-7b-chat
->  USER: Hi, I feel dizzy and have a headache for a few days already. Should I go the doctor? ASSISTANT: 如果您已經有幾天的頭痛和晃蕩感，建議您可以考慮去看醫生。這可能是由於許多因素引起的，包括睡眠不足、飲食不規律、缺氧、感染或是壓力過大等。建議您在去看醫生之前，先記錄下您的症狀和生活習慣，以便讓醫生更好地了解您的情況。-->
 
 #### Question 2
 "I have unregular pain the heart like stiches."
@@ -174,7 +214,11 @@ A full list of questions and responses can be found in the [evaluation](evaluati
 > Remember, it's always better to be safe and get any concerning symptoms checked by a healthcare professional. They can provide a proper diagnosis and treatment plan.
 
 
-##### llama-7b-chat
+#### Conclusion
+As we can see, the fine-tuned model is able to generate quite good responses to the questions.
+For example, the response to the first question showcases that the model understands the context of the question and is able to provide a clear answer.
+With these two examples it is also apparent that our fine-tuned model generates shorter responses than GTP-4, this is due to our prompt-engineering where we set the maximum length of the generated response to 256 tokens.
+This is the result of our experiments with the model, where we found that the model is not able to generate good responses for longer sequences.
 
 
 ### Quantitative Results
@@ -256,3 +300,8 @@ This is the classification report for the fine-tuned model on 100 questions from
    macro avg       0.28      0.27      0.24       100
 weighted avg       0.31      0.24      0.25       100
 ```
+
+As we can see, the model performs quite poorly on the task.
+This is quite counter-intuitive as the model should be able to answer the questions correctly and performs quite well on the qualitative evaluation.
+A reason for this could be that the model is not able to generalize well and overfits to the training data.
+Furhter investigation is needed to find the root cause of this problem.

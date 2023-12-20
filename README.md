@@ -10,12 +10,30 @@
 This project is being implemented in context of the course "Applied Deep Learning" at the Technical University of Vienna.
 The goal of this specific project is to fine-tune Llama2 model for a medical chat-application, a "Chat-Doc".
 
+> If you want to read more about the of 'HACKING' part of this project, please see [HACKING.md](https://github.com/MisterXY89/chat-doc/blob/main/HACKING.md).
+>
 > If you want to read the proposal of this project, please see [INITIATE.md](https://github.com/MisterXY89/chat-doc/blob/main/INITIATE.md).
 
 ## Project Overview
 The ChatDoc project aims to deploy a medical chatbot application that assists users in assessing their medical symptoms and provides reliable recommendations. The chatbot is powered by the Llama2 model, fine-tuned for medical NLP tasks using the QLoRA technique.
 
 ## Getting Started
+
+### From the HuggingFace Model Hub
+The final model is available on [HuggingFace](https://huggingface.co/MisterXY89/chat-doctor).
+Write me a message if you want to get access to the model.
+
+Once you are approved, you can use the huggingface library to load the model.
+> **NOTE**: The model needs a GPU to run, minimum 16GB of RAM and 8GB of GPU memory.
+```python
+from transformers import pipeline
+
+pipe = pipeline("text-generation", model="MisterXY89/chat-doctor")
+
+pipe("Hi, I feel dizzy and have a headache for a few days already. Should I go the doctor?")
+```
+
+### Reproduce the Results
 To use the ChatDoc application, follow the steps below:
 1. Clone the Repository:
 ```bash
@@ -54,7 +72,7 @@ Alternativly, you can use the `sage_maker_training.ipynb` notebook and configure
 
 ## Training Results
 The first training results are stored in the [logs](./logs) folder and visualized below:
-![Training results 13B](/images/results-13B-28-11-23.png)
+![Training results 13B](/images/results-7B-08-12-23.png)
 
 ## Run tests
 To run the tests, run the following command:
