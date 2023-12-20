@@ -25,6 +25,7 @@
     - [Quantitative Results](#quantitative-results)
       - [Methodology](#methodology)
       - [Results](#results)
+  - [Conclusion](#conclusion-1)
 
 ## 1. Introduction
 This document accompanies Milestone 2 - 'Hacking', and provides an in-depth exploration of our efforts to fine-tune llama2 for the specialized applications in medical diagnostics and advice.
@@ -90,7 +91,7 @@ The first training run was more of a proof-of-concept and test-run to see if the
 Please see the table below for a comparison of the two models.
 
 | Model | Dataset |  Epochs | Batch Size | Training Time | GPU | Training Loss |
-| --- | --- | --- |  --- | --- | --- | --- | 
+| --- | --- | --- |  --- | --- | --- | --- |
 | llama-13b | ICD-11 |  3 | 2 | 18062 | NVIDIA A10G - 24GB | 0.0611 |
 | llama-7b | dialogue-full |  2 | 3 | 18062 | NVIDIA A10G - 24GB | 1.8428 |
 
@@ -307,3 +308,12 @@ As we can see, the model performs quite poorly on the task.
 This is quite counter-intuitive as the model should be able to answer the questions correctly and performs quite well on the qualitative evaluation.
 A reason for this could be that the model is not able to generalize well and overfits to the training data.
 Furhter investigation is needed to find the root cause of this problem.
+
+
+## Conclusion
+In this milestone, we have shown that fine-tuning llama2 for medical diagnostics and advice is possible and that the model is able to generate quite good responses to questions. There are still some things we want to investigate further, like the poor performance on the MedMCQA dataset, but overall we are quite happy with the results and the performance of the fine-tuned model.
+
+Also we might train a new model on new/more data and experiment with different hyperparameters to improve the performance of the model.
+
+In the next milestone we want to build a chatbot-web-app that can be used to diagnose and give advice to patients.
+Additionally, we will also wan to build a RAG (Retrieval-Augmented Generation) model to improve the performance of the chatbot + provide a more explainable model to the user in case of wrong predictions as an additional feature.
