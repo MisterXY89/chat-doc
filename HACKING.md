@@ -14,17 +14,8 @@
     - [Inference](#inference)
   - [3. Results](#3-results)
     - [Model](#model)
-    - [Qualitative Evaluation](#qualitative-evaluation)
-      - [Question 1](#question-1)
-        - [ChatDoc](#chatdoc)
-        - [GTP-4](#gtp-4)
-      - [Question 2](#question-2)
-        - [ChatDoc](#chatdoc-1)
-        - [GTP-4](#gtp-4-1)
-      - [Conclusion](#conclusion)
-    - [Quantitative Results](#quantitative-results)
-      - [Methodology](#methodology)
-      - [Results](#results)
+    - [Qualitative Evaluation](#qualitative-evaluation)      
+    - [Quantitative Results](#quantitative-results)      
   - [Time-spent](#time-spent)
   - [Conclusion](#conclusion-1)
 
@@ -310,7 +301,7 @@ This is quite counter-intuitive as the model should be able to answer the questi
 A reason for this could be that the model is not able to generalize well and overfits to the training data.
 Furhter investigation is needed to find the root cause of this problem.
 
-## Time-spent
+## 4. Time-spent
 
 | WOY | Days | Task |
 | --- | --- | --- |
@@ -326,7 +317,7 @@ Furhter investigation is needed to find the root cause of this problem.
 We spent around 8 days on this milestone. Thus we are still (more or less) on track with our initial plan.
 
 
-## Conclusion
+## 5. Conclusion
 In this milestone, we have shown that fine-tuning llama2 for medical diagnostics and advice is possible and that the model is able to generate quite good responses to questions. There are still some things we want to investigate further, like the poor performance on the MedMCQA dataset, but overall we are quite happy with the results and the performance of the fine-tuned model.
 
 Also we might train a new model on new/more data and experiment with different hyperparameters to improve the performance of the model.
