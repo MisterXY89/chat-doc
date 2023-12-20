@@ -94,6 +94,8 @@ Please see the table below for a comparison of the two models.
 | llama-13b | ICD-11 |  3 | 2 | 18062 | NVIDIA A10G - 24GB | 0.0611 |
 | llama-7b | dialogue-full |  2 | 3 | 18062 | NVIDIA A10G - 24GB | 1.8428 |
 
+See also the xxx-paramter.json files in the `logs` folder for more training-specific parameters and information like the logs.
+
 #### Loss-Function
 The default loss function for the llama2 model is the cross-entropy loss function. We did not change it as cross-entropy is a widely-used loss function for fine-tuning language models (LLMs) because it effectively measures the difference between the predicted probability distribution and the actual distribution of the target data. This loss function is particularly advantageous for LLMs as it emphasizes learning from incorrect predictions, thereby driving the model to produce outputs that closely align with the expected human language patterns.
 
