@@ -6,7 +6,7 @@
 
 <div style="text-align: center; margin: auto">
 <img src="images/DALL-E-llama-doc.png" width="200px"
-style="border-radius: 100%; margin-bottom: 1em;">
+style="text-align: center; margin: aut; border-radius: 50px; transform: translateX(200%); width: 20%; margin-bottom: 1em;">
 </div>
 
 > Author: `Tilman Kerl` <br>
