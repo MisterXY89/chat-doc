@@ -90,7 +90,7 @@ The first training run was more of a proof-of-concept and test-run to see if the
 Please see the table below for a comparison of the two models.
 
 | Model | Dataset |  Epochs | Batch Size | Training Time | GPU | Training Loss |
-| --- | --- | --- |  --- | --- | --- | --- | --- |
+| --- | --- | --- |  --- | --- | --- | --- | 
 | llama-13b | ICD-11 |  3 | 2 | 18062 | NVIDIA A10G - 24GB | 0.0611 |
 | llama-7b | dialogue-full |  2 | 3 | 18062 | NVIDIA A10G - 24GB | 1.8428 |
 
