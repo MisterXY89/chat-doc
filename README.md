@@ -3,6 +3,12 @@
 ![example workflow](https://github.com/MisterXY89/chat-doc/actions/workflows/python-app.yml/badge.svg)
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 
+
+<div style="text-align: center; margin: auto">
+<img src="images/DALL-E-llama-doc.png" width="200px"
+style="border-radius: 100%; margin-bottom: 1em;">
+</div>
+
 > Author: `Tilman Kerl` <br>
 > Project Type: `Bring your own data` <br>
 > Domain `Natural Language Processing`
