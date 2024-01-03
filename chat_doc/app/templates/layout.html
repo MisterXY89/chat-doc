@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Template Project</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<!-- ICONS -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.5.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body>
+		{% include "includes/nav.html" %}
+		{% block header %}
+		<header class="container">
+		</header>
+		{% endblock %}
+		<div class="container mx-auto">
+			{% block content %}
+			{% endblock %}
+		</div>
+
+		{% include "includes/footer.html" %}
+	</body>
+</html>

@@ -41,6 +41,11 @@ def load_config():
             "hf_token": decouple_config("HF_TOKEN"),
             # ...
         },
+        "flask_app": {
+            "secret": decouple_config("FLASK_APP_SECRET"),
+            "app_name": decouple_config("FLASK_APP_NAME"),
+            "db_name": decouple_config("FLASK_APP_DB_NAME"),
+        },
         **yaml_config,
     }
 
