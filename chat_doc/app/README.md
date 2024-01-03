@@ -1,6 +1,25 @@
 # Chat-Doc App
 
-<!-- ADD SCREENSHOT -->
+<table align="center">
+  <tr>
+    <!-- Flask -->
+    <td align="center" valign="middle">
+      <img src="https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png" alt="Flask" height="25"/>    
+    </td>
+    <!-- Tailwind CSS -->
+    <td align="center" valign="middle">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Tailwind_CSS_logo.svg/1024px-Tailwind_CSS_logo.svg.png" alt="Tailwind CSS" height="25"/>
+    </td>
+    <!-- daisyUI -->
+    <td align="center" valign="middle">
+      <img src="https://daisyui.com/images/daisyui-logo/daisyui-logomark-1024-1024.png" alt="daisyUI" height="25"/>
+    </td>
+  </tr>
+</table>
+
+<div align="center">
+  <img src="https://miro.medium.com/v2/resize:fit:1400/1*m-4rGpu0ZNW2rguudyFvVA.png" alt="UI EXAMPLE SCREENSHOT" width="70%" />
+</div>
 
 ## Run it yourself
 To run the app locally, you can use the following command in your terminal:
@@ -17,31 +36,6 @@ app = App()
 app.run(port = args.port, debug = args.debug)
 ```
 ## Tech-Stack
-
-## Libraries Used
-
-<table>
-  <tr>
-    <!-- Flask -->
-    <td align="center" valign="middle">
-      <img src="https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png" alt="Flask" height="50"/>
-      <br>Flask
-    </td>
-    <!-- Tailwind CSS -->
-    <td align="center" valign="middle">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Tailwind_CSS_logo.svg/1024px-Tailwind_CSS_logo.svg.png" alt="Tailwind CSS" height="50"/>
-      <br>Tailwind CSS
-    </td>
-    <!-- daisyUI -->
-    <td align="center" valign="middle">
-      <img src="https://daisyui.com/images/daisyui-logo/daisyui-logomark-1024-1024.png" alt="daisyUI" height="50"/>
-      <br>daisyUI
-    </td>
-  </tr>
-</table>
-
-
-
 The app uses Flask, Tailwind CSS, and daisyUI.
 This combination is selected for its efficiency and compatibility with our existing Python codebase.
 - Flask offers a lightweight and modular framework for web development,
