@@ -107,7 +107,7 @@ See above
 
 ### Start Server & tailwindcss
 ```bash
-python pipe.py run-app --debug True
+python cli.py run-app --debug True
 ```
 and in a separate terminal:
 ```bash

@@ -18,7 +18,7 @@ function doctorMSG(doctorAnswer) {
     <div class="chat-image avatar">
       <div class="w-10 rounded-full">
         <img alt="Llama doctor chad"
-          src="https://github.com/MisterXY89/chat-doc/raw/main/images/logo/DALL-E-llama-doc-border-radius-50.png" />
+          src="{{ url_for('static', filename='img/llama-doc-icon.png') }}" />
       </div>
     </div>
     <div class="chat-header">

@@ -5,38 +5,67 @@
 
 {% block content %}
 
-<div class="max-w-5xl px-6 lg:px-8 mx-auto doc-chat" id="{{chat_id}}">
-  <div class="chat chat-start">
-    <div class="chat-image avatar">
-      <div class="w-10 rounded-full">
-        <img alt="Tailwind CSS chat bubble component"
-          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+<div class="relative overflow-hidden bg-primary text-primary py-16 sm:py-24 rounded-lg border-none mb-16 outline-0 shadow">
+  <img src="{{url_for('static', filename='img/medical-bg-start1.jpg')}}" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8 border-0">
+    <div class="mx-auto max-w-2xl lg:mx-0">
+      <h2 class="text-4xl font-bold tracking-tight sm:text-6xl text-white">Llama-2 based Chat-Doc</h2>
+      <p class="mt-6 text-lg leading-8 text-white">
+        A medical chatbot application that assists users in assessing their medical symptoms and providing guidance. The chatbot is powered by the llama-2-7b-hf model, fine-tuned for medical NLP tasks using the QLoRA technique.
+      </p>
+    </div>
+    <div class="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
+      <div class="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
+        <a href="https://github.com/MisterXY89/chat-doc" target="_blank">Github <span aria-hidden="true">&rarr;</span></a>
+        <a href="/chat">Start Chatting<span aria-hidden="true">&rarr;</span></a>
       </div>
-    </div>
-    <div class="chat-header">
-      Obi-Wan Kenobi
-      <time class="text-xs opacity-50">12:45</time>
-    </div>
-    <div class="chat-bubble">{{chat_id}}</div>
-    <div class="chat-footer opacity-50">
-      Delivered
     </div>
   </div>
-  <div class="chat chat-end">
-    <div class="chat-image avatar">
-      <div class="w-10 rounded-full">
-        <img alt="Tailwind CSS chat bubble component"
-          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+</div>
+
+
+<div class="flex justify-center">
+  <div class="gap-2 grid md:grid-cols-3 sm:grid-cols-1">
+    <div class="stat rounded-md shadow">
+      <div class="stat-figure text-primary">
+        <span class="material-symbols-outlined text-5xl">
+          code
+        </span>
       </div>
+      <div class="stat-title">Model Parameters</div>
+      <div class="stat-value text-primary">+ 7B</div>
+      <div class="stat-desc">Trained on a single GPU</div>
     </div>
-    <div class="chat-header">
-      Anakin
-      <time class="text-xs opacity-50">12:46</time>
+
+    <div class="stat rounded-md shadow">
+      <div class="stat-figure text-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+      </div>
+      <div class="stat-title">CO2-Savings</div>
+      <div class="stat-value text-secondary">75%</div>
+      <div class="stat-desc">With employing QLoRA</div>
     </div>
-    <div class="chat-bubble">I hate you!</div>
-    <div class="chat-footer opacity-50">
-      Seen at 12:46
+
+    <div class="stat rounded-md shadow">
+      <div class="stat-figure text-secondary">
+        <div class="avatar">
+          <div class="w-16 rounded-full">
+            <span class="material-symbols-outlined text-5xl">
+              lock_open_right
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-value">100%</div>
+      <div class="stat-title">Open Source</div>
+        <div class="stat-desc text-secondary">
+          <a href="https://github.com/MisterXY89/chat-doc" target="_blank">GitHub</a>
+          and
+          <a href="https://huggingface.co/MisterXY89/chat-doctor" target="_blank">HuggingFace</a>
+        </div>
+      </a>
     </div>
+
   </div>
 </div>
 
