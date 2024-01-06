@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="cupcake">
 	<head>
 		<meta charset="utf-8">
 		<title>Template Project</title>
@@ -8,21 +8,23 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 		<!-- ICONS -->
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!-- CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@4.5.0/dist/full.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.tailwindcss.com"></script>
+		<link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
+		<!-- custom CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 	</head>
-	<body>
-		{% include "includes/nav.html" %}
-		{% block header %}
-		<header class="container">
-		</header>
-		{% endblock %}
-		<div class="container mx-auto">
-			{% block content %}
+	<body class="fixed h-screen w-full">
+		<main class="">
+			{% include "includes/nav.html" %}
+			{% block header %}
+			<header class="container">
+			</header>
 			{% endblock %}
-		</div>
+			<div class="container mx-auto px-4">
+				{% block content %}
+				{% endblock %}
+			</div>
 
-		{% include "includes/footer.html" %}
+			{% include "includes/footer.html" %}
+		</main>
 	</body>
 </html>

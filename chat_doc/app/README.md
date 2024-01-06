@@ -4,7 +4,7 @@
   <tr>
     <!-- Flask -->
     <td align="center" valign="middle">
-      <img src="https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png" alt="Flask" height="25"/>    
+      <img src="https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png" alt="Flask" height="25"/>
     </td>
     <!-- Tailwind CSS -->
     <td align="center" valign="middle">
@@ -68,6 +68,6 @@ These datasets were carefully selected for their relevance and depth in medical 
 The training was conducted on AWS, leveraging the computational power necessary to manage the model's extensive requirements.
 The choice of the 7B model was strategic, balancing the need for a sophisticated understanding of medical dialogue with computational efficiency.
 
-The fine-tuning process was detailed in [Milestone 2](/HACKING.md), where we detailed the methodology, data handling, and outcomes of the training phase.
+The fine-tuning process was detailed in [Milestone 2](https://github.com/MisterXY89/chat-doc/blob/main/HACKING.md), where we detailed the methodology, data handling, and outcomes of the training phase.
 
 

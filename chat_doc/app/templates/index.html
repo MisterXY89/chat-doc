@@ -5,10 +5,12 @@
 
 {% block content %}
 
-<div class="chat chat-start">
+<div class="max-w-5xl px-6 lg:px-8 mx-auto">
+  <div class="chat chat-start" id="{{chat_id}}">
     <div class="chat-image avatar">
       <div class="w-10 rounded-full">
-        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        <img alt="Tailwind CSS chat bubble component"
+          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
       </div>
     </div>
     <div class="chat-header">
@@ -23,7 +25,8 @@
   <div class="chat chat-end">
     <div class="chat-image avatar">
       <div class="w-10 rounded-full">
-        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        <img alt="Tailwind CSS chat bubble component"
+          src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
       </div>
     </div>
     <div class="chat-header">
@@ -35,5 +38,7 @@
       Seen at 12:46
     </div>
   </div>
+</div>
+
 
 {% endblock %}

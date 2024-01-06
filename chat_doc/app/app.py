@@ -14,6 +14,7 @@ class App:
         self.app = Flask(
             config["app_name"],
             static_url_path="/static/",
+            static_folder=BASE_DIR + "/app/static",
             template_folder=BASE_DIR + "/app/templates",
         )
         self.configure_app(config)
@@ -25,6 +26,8 @@ class App:
         self.app.config["FLASK_SECRET"] = config["secret"]
         self.app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + config["db_name"]
         self.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+        # set static folder
+        self.app.config
 
     def register_blueprints(self):
         self.app.register_blueprint(routes_blueprint)
