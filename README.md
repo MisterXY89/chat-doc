@@ -13,6 +13,8 @@
 This project is being implemented in context of the course "Applied Deep Learning" at the Technical University of Vienna.
 The goal of this specific project is to fine-tune Llama2 model for a medical chat-application, a "Chat-Doc".
 
+> If you want to read more about the 'DELIVER' part of this projext, please see [DELIVER.md](htpps://github.com/MisterXY89/blob/main/DELIVER.md) or the `chat_doc/app/` folder.
+>
 > If you want to read more about the of 'HACKING' part of this project, please see [HACKING.md](https://github.com/MisterXY89/chat-doc/blob/main/HACKING.md).
 >
 > If you want to read the proposal of this project, please see [INITIATE.md](https://github.com/MisterXY89/chat-doc/blob/main/INITIATE.md).
@@ -76,6 +78,17 @@ Alternativly, you can use the `sage_maker_training.ipynb` notebook and configure
 ## Training Results
 The first training results are stored in the [logs](./logs) folder and visualized below:
 ![Training results 13B](/images/results-7B-08-12-23.png)
+
+## Running the Web-App
+To run the web-app, first install the dependencies (assuming python-related libraries are already installed):
+```bash
+npm i
+```
+
+then run the following command:
+```bash
+python pipe.py run-app
+```
 
 ## Run tests
 To run the tests, run the following command:
