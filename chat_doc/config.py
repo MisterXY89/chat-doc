@@ -42,7 +42,8 @@ def load_config():
             # ...
         },
         "flask_app": {
-            "secret": decouple_config("FLASK_APP_SECRET"),
+            "flask_secret": decouple_config("SECRET_KEY"),
+            "csfr_secret": decouple_config("WTF_CSRF_SECRET_KEY"),
             "app_name": decouple_config("FLASK_APP_NAME"),
             "db_name": decouple_config("FLASK_APP_DB_NAME"),
         },
