@@ -90,6 +90,31 @@ then run the following command:
 python pipe.py run-app
 ```
 
+## Local Development
+
+### Install Dependencies
+```bash
+# ui dependencies
+npm i
+
+# all python dependencies (incl. ML dependencies)
+conda env create -f environment.yml
+conda activate chat-doc
+```
+
+### Set up pre-commit hooks:
+See above
+
+### Start Server & tailwindcss
+```bash
+python pipe.py run-app --debug True
+```
+and in a separate terminal:
+```bash
+# tracks changes in the tailwindcss input file and compiles it to the output file
+npx tailwindcss -i ./chat_doc/app/static/src/input.css -o ./chat_doc/app/static/dist/css/output.css --watch
+```
+
 ## Run tests
 To run the tests, run the following command:
 ```bash
