@@ -19,7 +19,8 @@ def _delete_existing_data():
 
 def pytest_generate_tests(metafunc):
     os.environ["HF_TOKEN"] = "xxx"
-    os.environ["FLASK_APP_SECRET"] = time.time()
+    os.environ["FLASK_APP_SECRET"] = str(time.time())
+    os.environ["WTF_CSRF_SECRET_KEY"] = str(time.time() + 2)
     os.environ["FLASK_APP_NAME"] = "Chat-Doctor"
     os.environ["FLASK_APP_DB_NAME"] = "app.db"
 
