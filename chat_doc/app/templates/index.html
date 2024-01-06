@@ -5,8 +5,8 @@
 
 {% block content %}
 
-<div class="max-w-5xl px-6 lg:px-8 mx-auto">
-  <div class="chat chat-start" id="{{chat_id}}">
+<div class="max-w-5xl px-6 lg:px-8 mx-auto doc-chat" id="{{chat_id}}">
+  <div class="chat chat-start">
     <div class="chat-image avatar">
       <div class="w-10 rounded-full">
         <img alt="Tailwind CSS chat bubble component"
@@ -17,7 +17,7 @@
       Obi-Wan Kenobi
       <time class="text-xs opacity-50">12:45</time>
     </div>
-    <div class="chat-bubble">You were the Chosen One!</div>
+    <div class="chat-bubble">{{chat_id}}</div>
     <div class="chat-footer opacity-50">
       Delivered
     </div>

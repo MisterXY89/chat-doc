@@ -3,6 +3,7 @@ import time
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 from sqlalchemy.sql import text
 
 from chat_doc.app.routes import routes_blueprint
@@ -19,15 +20,16 @@ class App:
         )
         self.configure_app(config)
         self.db = SQLAlchemy(self.app)
+
+        self.csrf = CSRFProtect(self.app)
         self.register_blueprints()
         os.environ["TZ"] = "Europe/Berlin"
 
     def configure_app(self, config):
-        self.app.config["FLASK_SECRET"] = config["secret"]
+        self.app.config["SECRET_KEY"] = config["flask_secret"]
+        self.app.config["WTF_CSRF_SECRET_KEY"] = config["csfr_secret"]
         self.app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + config["db_name"]
         self.app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-        # set static folder
-        self.app.config
 
     def register_blueprints(self):
         self.app.register_blueprint(routes_blueprint)

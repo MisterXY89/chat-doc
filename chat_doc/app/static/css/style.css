@@ -2,3 +2,18 @@
  * CUSTOM CSS STYLES
  */
 
+textarea,
+textarea:active,
+textarea:focus,
+textarea:hover
+{
+    border: none !important;
+    outline: none !important;
+    resize: none !important;
+}
+
+textarea {
+    line-height: normal !important;
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}

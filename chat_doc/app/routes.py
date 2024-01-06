@@ -26,8 +26,14 @@ def home():
     return render_template("index.html", chat_id=chat_id)
 
 
+@routes_blueprint.route("/chat")
+def chat():
+    chat_id = generate_chat_id(request)
+    return render_template("chat.html", chat_id=chat_id)
+
+
 # call hf inference endpoint, extract answer and return it
-@routes_blueprint.route("/chat-doc")
+@routes_blueprint.route("/api/ask")
 def chat_doc():
     chat_id = request.args.get("chat_id")
     history = request.args.get("history")
