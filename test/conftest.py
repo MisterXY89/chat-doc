@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+import time
 
 import pytest
 
@@ -18,6 +19,9 @@ def _delete_existing_data():
 
 def pytest_generate_tests(metafunc):
     os.environ["HF_TOKEN"] = "xxx"
+    os.environ["FLASK_APP_SECRET"] = time.time()
+    os.environ["FLASK_APP_NAME"] = "Chat-Doctor"
+    os.environ["FLASK_APP_DB_NAME"] = "app.db"
 
 
 @pytest.fixture(autouse=True)
