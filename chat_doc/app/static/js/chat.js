@@ -33,6 +33,11 @@ function doctorMSG(doctorAnswer) {
   </div>`;
 }
 
+function replaceDocMSG(resp) {
+    let latest = document.querySelector('.doc-chat .chat-start:last-child .message');
+    latest.innerHTML = resp;
+}
+
 function userMSG(userQuestion) {
     return `
     <div class="chat chat-end">
@@ -73,7 +78,16 @@ async function askDoc() {
 
     // get the chat history (all messages except the last one)
     // the last one is (see above) the new user message
-    const chatHistory = document.querySelectorAll('.doc-chat .message:not(:last-child)');
+    let chatHistoryDivs = Array.from(
+        document.querySelectorAll('.chat:not(:last-child)')
+    );
+
+    let chatHistory = [];
+    chatHistoryDivs.forEach((el, i) => {
+        chatHistory.push(
+            i % 2 == 0 ? "Dr. Chad: " + el.querySelector(".chat-bubble").textContent : "Patient: " + el.querySelector(".chat-bubble").textContent
+        );
+    });
 
     // chatId --> generated in the backend (app.py)
     const chatId = document.querySelector('.doc-chat').id;
@@ -88,24 +102,31 @@ async function askDoc() {
         "chat_id": chatId
     }
 
+    appendMSG(doctorMSG('<span class="loading loading-dots loading-sm"></span>'));
+
+    console.log(data);
+
     const csrf_token = document.getElementsByName("csrf_token")[0].value;
     const url = "/api/ask";
-    const response = await fetch(url, {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': csrf_token
         },
         body: JSON.stringify(data)
-    });
+    }).then(response => response.json())
+        .then(response => {
+            console.log(response);
+            replaceDocMSG(response.answer);
+        });
 
-    return response.json();
+    // replaceDocMSG(response.json().answer);
 }
 
 
 function autoScaleTextArea(el) {
     // thanks to https://forum.mendix.com/link/space/ui-&-front-end/questions/122884
-    console.log(el)
     setTimeout(function () {
         el.style.cssText = 'min-height:37px; height: 37px;';
         //   for box-sizing other than "content-box" use:
@@ -126,10 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const newMSGtextarea = document.querySelector("#newMSG");
     newMSGtextarea.addEventListener('keydown', function (event) {
         if (event.key === "Enter" && !event.shiftKey) {
-            // Cancel the default action, if needed
             event.preventDefault();
             askDoc();
-            // alert('enter was pressed!');
         }
     });
 
