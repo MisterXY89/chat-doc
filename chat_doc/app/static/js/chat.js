@@ -52,7 +52,7 @@ function userMSG(userQuestion) {
       You
       <time class="text-xs opacity-50">${getCurrentTime()}</time>
     </div>
-    <div class="chat-bubble user-message message">${userQuestion}</div>
+    <div class="chat-bubble user-message message bg-base-200 primary-content ">${userQuestion}</div>
     <!--
     <div class="chat-footer opacity-50">
       Answers are auto-generated.
@@ -139,10 +139,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("ready");
 
-    // greet the user
+    // // greet the user
     appendMSG(
         doctorMSG("Hello, this is Dr. Chad! How may I help you today?")
     )
+    // // sample conversation
+    // appendMSG(
+    //     userMSG("I have a headache.")
+    // )
+    // appendMSG(
+    //     doctorMSG("I'm sorry to hear that. Do you have any other symptoms?")
+    // )
+    // appendMSG(
+    //     userMSG("No, I don't think so.")
+    // )
+    // appendMSG(
+    //     doctorMSG("I see. Do you have any allergies?")
+    // )
+    // appendMSG(
+    //     userMSG("No, I don't.")
+    // )
+    // appendMSG(
+    //     doctorMSG("I recommend you take some painkillers and rest.")
+    // )
+    // appendMSG(
+    //     userMSG("Thank you!")
+    // )
+    // appendMSG(
+    //     doctorMSG("You're welcome!")
+    // )
 
     const newMSGtextarea = document.querySelector("#newMSG");
     newMSGtextarea.addEventListener('keydown', function (event) {
