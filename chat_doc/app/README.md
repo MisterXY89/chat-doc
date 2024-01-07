@@ -18,7 +18,7 @@
 </table>
 
 <div align="center">
-  <img src="https://github.com/MisterXY89/chat-doc/blob/main/images/prod-image-1.png" alt="UI EXAMPLE SCREENSHOT" width="70%" />
+  <img src="https://github.com/MisterXY89/chat-doc/blob/main/images/prod-image-2.png" alt="UI EXAMPLE SCREENSHOT" width="70%" />
 </div>
 
 ## Run it yourself
