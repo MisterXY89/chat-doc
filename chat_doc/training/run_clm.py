@@ -22,7 +22,6 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
-    SFTTrainer,
     Trainer,
     TrainingArguments,
     default_data_collator,
