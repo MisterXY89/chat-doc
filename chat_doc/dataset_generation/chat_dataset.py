@@ -3,6 +3,7 @@ import pickle
 import pandas as pd
 
 from chat_doc.config import DATA_DIR, logger
+from chat_doc.inference.prompt_template import PromptTemplate
 
 
 class ChatDataset(object):
@@ -11,6 +12,7 @@ class ChatDataset(object):
         self.dataset = None
         self.prompts = None
         self.processed = False
+        self.training_system_prompt = "Below are a series of dialogues between various people and a medical AI doctor (Dr. Chad). The AI doctor (Dr. Chad) tries to be helpful, polite, honest, sophisticated, emotionally aware, and humble-but-knowledgeable. The AI doctor is happy to help with almost anything, and will do its best to understand exactly what is needed. It also tries to avoid giving false or misleading information, and it caveats when it isn't entirely sure about the right answer. That said, the assistant is practical and really does its best, and doesn't let caution get too much in the way of being useful."
 
     def save(self, prompt=False, fn_affix=""):
         """
@@ -78,8 +80,30 @@ class ChatDataset(object):
         response = f"### Answer\n{response}"
         # join all the parts together
         prompt = "\n\n".join([i for i in [instruction, context, response] if i is not None])
+        return prompt
+
+    def unify_prompt_v2(self, conversation):
+        """
+        conversation: list of tuples (instruction, response)
+        """
+
+        assert len(conversation) > 0, "Conversation must not be empty."
+
+        # format conversation
+        formatted_conversation = ""
+
+        def formatted_conversation_template(instruction, response):
+            return f"""<s>[INST] <<SYS>>
+{self.training_system_prompt}
+<</SYS>>
+
+{instruction} [/INST] {response}) </s>"""
+
+        for msg_tuple in conversation:
+            formatted_conversation += formatted_conversation_template(msg_tuple[0], msg_tuple[1])
+
         return {
-            "text": prompt,
+            "text": formatted_conversation,
         }
 
     def get_dataset_name(self):

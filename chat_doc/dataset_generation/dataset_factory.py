@@ -5,6 +5,7 @@ import datasets
 import pandas as pd
 
 from chat_doc.config import DATA_DIR, ROOT_DIR, logger
+from chat_doc.dataset_generation.baize_dataset import BaizeDataset
 from chat_doc.dataset_generation.diagnose_dataset import DiagnoseDataset
 from chat_doc.dataset_generation.icd11_dataset import ICD11Dataset
 from chat_doc.dataset_generation.med_dialogue_dataset import MedDialogueDataset
@@ -12,18 +13,20 @@ from chat_doc.dataset_generation.pmc_patients_dataset import PMCPatientsDataset
 
 
 class DatasetFactory:
+    available_datasets = [
+        "icd",
+        "pmc",
+        "diagnose",
+        "med-dialogue",
+        "baize",
+        "dialogue-full",
+        "full",
+    ]
+
     def __init__(self):
         self.dataset = None
         self.full_path = ROOT_DIR + "/data/full_prompts.pkl"
         self.dialogue_path = ROOT_DIR + "/data/full_dialogue_prompts.pkl"
-        self.available_datasets = [
-            "icd",
-            "pmc",
-            "diagnose",
-            "med-dialogue",
-            "dialogue-full",
-            "full",
-        ]
 
     def build_full_dialogue_dataset(self):
         dialogue_prompts = self.load_dataset("med-dialogue")
@@ -104,33 +107,40 @@ class DatasetFactory:
 
         return prompts
 
+    def _set_dataset(self, dataset_name):
+        if dataset_name == "icd":
+            return ICD11Dataset()
+        elif dataset_name == "pmc":
+            return PMCPatientsDataset()
+        elif dataset_name == "diagnose":
+            return DiagnoseDataset()
+        elif dataset_name == "med-dialogue":
+            return MedDialogueDataset()
+        elif dataset_name == "baize":
+            return BaizeDataset()
+
     def build_dataset(self, name):
-        if name == "icd":
-            self.dataset = ICD11Dataset()
-        elif name == "pmc":
-            self.dataset = PMCPatientsDataset()
-        elif name == "diagnose":
-            self.dataset = DiagnoseDataset()
-        elif name == "med-dialogue":
-            self.dataset = MedDialogueDataset()
-        elif name == "dialogue-full":
-            self.build_full_dialogue_dataset()
+        self.dataset = self._set_dataset(name)
+
+        if self.dataset:
+            self.dataset.load_data()
+            self.dataset.process_data()
+            self.dataset.build_prompts()
+
+            # save both, preprocessed and prompts (ready to use)
+            self.dataset.save(prompt=True)
+            # self.dataset.save(output_path, prompt=True, fn_affix="v1")
+
+            return self.dataset.prompts
+
+        if name == "dialogue-full":
+            return self.build_full_dialogue_dataset()
         elif name == "full":
-            self.build_full_dataset()
+            return self.build_full_dataset()
         else:
             raise ValueError(
                 f"Dataset {name} not supported. Please choose from: {self.available_datasets}"
             )
-
-        self.dataset.load_data()
-        self.dataset.process_data()
-        self.dataset.build_prompts()
-
-        # save both, preprocessed and prompts (ready to use)
-        self.dataset.save(prompt=True)
-        # self.dataset.save(output_path, prompt=True, fn_affix="v1")
-
-        return self.dataset.prompts
 
     def convert_to_hf(self, dataset):
         logger.info("Converting to HuggingFace Dataset")
@@ -138,15 +148,13 @@ class DatasetFactory:
         return hf_dataset
 
     def load_dataset(self, name, is_prompts=True):
-        if name == "icd":
-            self.dataset = ICD11Dataset()
-        elif name == "pmc":
-            self.dataset = PMCPatientsDataset()
-        elif name == "diagnose":
-            self.dataset = DiagnoseDataset()
-        elif name == "med-dialogue":
-            self.dataset = MedDialogueDataset()
-        elif name == "dialogue-full":
+        self.dataset = self._set_dataset(name)
+
+        if self.dataset:
+            self.dataset.load(is_prompts=is_prompts)
+            return self.dataset.dataset
+
+        if name == "dialogue-full":
             return self.load_full_dialogue_dataset()
         elif name == "full":
             return self.load_full_dataset()
@@ -154,7 +162,3 @@ class DatasetFactory:
             raise ValueError(
                 f"Dataset {name} not supported. Please choose from: {self.available_datasets}"
             )
-
-        self.dataset.load(is_prompts=is_prompts)
-
-        return self.dataset.dataset
