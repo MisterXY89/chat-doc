@@ -25,7 +25,7 @@ if __name__ == "__main__":
     generate_parser = subparsers.add_parser("generate", help="Generate data")
     generate_parser.add_argument(
         "--dataset",
-        choices=["pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"],
+        choices=DatasetFactory.available_datasets,
         required=True,
         help="Dataset to generate",
     )
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     train_parser = subparsers.add_parser("train", help="Train the model")
     train_parser.add_argument(
         "--dataset",
-        choices=["pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"],
+        choices=DatasetFactory.available_datasets,
         required=True,
         help="Dataset to train on",
     )
@@ -50,15 +50,11 @@ if __name__ == "__main__":
         "--output_path", default="./model", help="Output path (default: ./model)"
     )
     # setting default to None here so that we can check if the user has set the hyperparameter + defaults are set in train.py
+    train_parser.add_argument("--epoch", type=int, help="Number of epochs (default: 3)", default=3)
     train_parser.add_argument(
-        "--epoch", type=int, help="Number of epochs (default: 3)", default=None
+        "--lr", type=float, help="Learning rate (default: 2e-4)", default=2e-4
     )
-    train_parser.add_argument(
-        "--lr", type=float, help="Learning rate (default: 2e-4)", default=None
-    )
-    train_parser.add_argument(
-        "--batch_size", type=int, help="Batch size (default: 2)", default=None
-    )
+    train_parser.add_argument("--batch_size", type=int, help="Batch size (default: 2)", default=2)
 
     # "run-app" subcommand
     generate_parser = subparsers.add_parser("run-app", help="Run web-app")
@@ -99,7 +95,8 @@ if __name__ == "__main__":
     elif args.command == "run-app":
         app = App()
         app.run(port=args.port, debug=args.debug)
+
     else:
-        logger.error("Invalid command. Use 'generate' or 'train'.")
+        logger.error("Invalid command. Use 'generate' or 'train' or 'run-app'.")
 
     args = parser.parse_args()
