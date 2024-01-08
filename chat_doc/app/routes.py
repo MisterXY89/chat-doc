@@ -23,13 +23,13 @@ routes_blueprint = Blueprint("routes_blueprint", __name__)
 @routes_blueprint.route("/")
 def home():
     chat_id = generate_chat_id(request)
-    return render_template("index.html", chat_id=chat_id)
+    return render_template("index.html", chat_id=chat_id, title="Home")
 
 
 @routes_blueprint.route("/chat")
 def chat():
     chat_id = generate_chat_id(request)
-    return render_template("chat.html", chat_id=chat_id)
+    return render_template("chat.html", chat_id=chat_id, title="Chat")
 
 
 # My right leg itches a lot and I dont know why. I have not been in contact with anything I think
