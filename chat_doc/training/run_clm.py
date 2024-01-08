@@ -18,12 +18,15 @@ import torch
 from datasets import load_from_disk
 from huggingface_hub import HfFolder, login
 from transformers import (
+    AdamW,
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
+    SFTTrainer,
     Trainer,
     TrainingArguments,
     default_data_collator,
+    get_linear_schedule_with_warmup,
     set_seed,
 )
 
@@ -68,6 +71,12 @@ def parse_arge():
         type=bool,
         default=True,
         help="Whether to merge LoRA weights with base model.",
+    )
+    parser.add_argument(
+        "--weight_decay",
+        type=float,
+        default=0.01,
+        help="Weight decay to use for training.",
     )
     args, _ = parser.parse_known_args()
 
@@ -114,6 +123,7 @@ def find_all_linear_names(model):
     return list(lora_module_names)
 
 
+# bf16 is only supported on A100 GPUs
 def create_peft_model(model, gradient_checkpointing=True, bf16=True):
     from peft import (
         LoraConfig,
@@ -202,6 +212,9 @@ def training_function(args):
         logging_strategy="steps",
         logging_steps=10,
         save_strategy="no",
+        optim="paged_adamw_32bit",
+        weight_decay=args.weight_decay,
+        report_to="tensorboard",
     )
 
     # Create Trainer instance
@@ -210,6 +223,11 @@ def training_function(args):
         args=training_args,
         train_dataset=dataset,
         data_collator=default_data_collator,
+        # tokenizer=AutoTokenizer.from_pretrained(args.model_id),
+        # Maximum sequence length to use
+        # max_seq_length = None,
+        # Pack multiple short examples in the same input sequence to increase efficiency
+        # packing = False,
     )
 
     # Start training
