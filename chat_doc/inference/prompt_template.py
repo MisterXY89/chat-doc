@@ -12,17 +12,15 @@ class PromptTemplate:
     """
 
     llama_template_str = """<s>[INST] <<SYS>>
-$system_prompt<<SYS>>
-###
+$system_prompt
+<</SYS>>
 
 Previous Conversation:
 '''
 $history
 '''
 
-$input[/INST]
-
-"""
+$input [/INST] $model_answer </s>"""
 
     qa_system_prompt_str = """Please process the following single-choice question using the provided data and return the correct answer-option.
     Example: "The answer is A."
@@ -37,7 +35,7 @@ Your goal is to provide a thoughtful, step-by-step assessment, keeping in mind t
         # Template class for safe substitution
         self.template = Template(self.llama_template_str)
 
-    def create_prompt(self, input_text, history, qa=False, system_prompt=None):
+    def create_prompt(self, input_text, history, qa=False, system_prompt=None, model_answer=""):
         if system_prompt is None:
             system_prompt = self.doctor_chad_system_prompt_str
 
@@ -45,7 +43,10 @@ Your goal is to provide a thoughtful, step-by-step assessment, keeping in mind t
         if qa:
             system_prompt = self.qa_system_prompt_str
         return self.template.safe_substitute(
-            input=input_text, history=history, system_prompt=system_prompt
+            input=input_text,
+            history=history,
+            system_prompt=system_prompt,
+            model_answer=model_answer,
         )
 
 
