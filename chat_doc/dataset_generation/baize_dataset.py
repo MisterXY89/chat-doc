@@ -22,6 +22,8 @@ class BaizeDataset(ChatDataset):
         """
         try:
             self.dataset = pd.read_json(self.baize_path)
+            # sample 10% of the data
+            self.dataset = self.dataset.sample(frac=0.1, random_state=42)
             logger.info("Baize data loaded from json file.")
         except Exception as e:
             logger.error(f"Error loading dataset: {e}")

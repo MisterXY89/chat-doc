@@ -91,12 +91,13 @@ class Chat(object):
             "inputs": prompt,
             "parameters": {
                 "do_sample": True,
-                "top_p": 0.92,
-                "temperature": 0.5,
-                "top_k": 500,
-                "max_new_tokens": 256,
-                "repetition_penalty": 1.1,
-                "stop": ["<</SYS>>"],
+                "top_p": 0.95,
+                "temperature": 0.15,
+                "top_k": 450,
+                "max_new_tokens": 512,
+                "repetition_penalty": 1.2,
+                "length_penalty": 0.3,
+                "stop": "<</SYS>>",
             },
         }
         # override parameters for qa --> single-choice questions

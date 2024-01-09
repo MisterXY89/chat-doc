@@ -52,7 +52,7 @@ function userMSG(userQuestion) {
       You
       <time class="text-xs opacity-50">${getCurrentTime()}</time>
     </div>
-    <div class="chat-bubble user-message message bg-base-200 primary-content ">${userQuestion}</div>
+    <div class="chat-bubble user-message message bg-base-300 text-base-content">${userQuestion}</div>
     <!--
     <div class="chat-footer opacity-50">
       Answers are auto-generated.

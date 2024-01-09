@@ -41,8 +41,12 @@ def parse_arge():
     )
     parser.add_argument("--dataset_path", type=str, default="lm_dataset", help="Path to dataset.")
     parser.add_argument(
-        "--hf_token", type=str, default=HfFolder.get_token(), help="Path to dataset."
+        "--hf_token",
+        type=str,
+        default=HfFolder.get_token(),
+        help="HF token to use for authentication",
     )
+
     # add training hyperparameters for epochs, batch size, learning rate, and seed
     parser.add_argument("--epochs", type=int, default=3, help="Number of epochs to train for.")
     parser.add_argument(
@@ -213,7 +217,7 @@ def training_function(args):
         save_strategy="no",
         optim="paged_adamw_32bit",
         weight_decay=args.weight_decay,
-        report_to="tensorboard",
+        # report_to="tensorboard",
     )
 
     # Create Trainer instance

@@ -15,7 +15,7 @@ class PromptTemplate:
 $system_prompt
 <</SYS>>
 
-Previous Conversation:
+Previous conversation:
 '''
 $history
 '''
@@ -48,6 +48,18 @@ Your goal is to provide a thoughtful, step-by-step assessment, keeping in mind t
             system_prompt=system_prompt,
             model_answer=model_answer,
         )
+
+    def create_prompt_v2(self, input_text, history, system_prompt=None):
+        if system_prompt is None:
+            system_prompt = self.doctor_chad_system_prompt_str
+
+        new_prompt = self.llama_template_str.safe_substitute(
+            model_answer="",
+            input=input_text,
+            history=history,
+        )
+
+        return new_prompt
 
 
 if __name__ == "__main__":

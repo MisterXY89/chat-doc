@@ -23,14 +23,30 @@ def generate_chat_id(req: request):
 
 
 def _make_hf_request(payload):
-    API_URL = "https://chdgdfk63z6o9xd8.eu-west-1.aws.endpoints.huggingface.cloud"
+    # API_URL_V1 = "https://chdgdfk63z6o9xd8.eu-west-1.aws.endpoints.huggingface.cloud"
+    API_URL_V2 = "https://pxei8lam5mc67ngq.eu-west-1.aws.endpoints.huggingface.cloud"
     headers = {
         "Authorization": f"Bearer {config['credentials']['hf_token']}",
         "Content-Type": "application/json",
     }
 
-    response = requests.post(API_URL, headers=headers, json=payload)
+    response = requests.post(API_URL_V2, headers=headers, json=payload)
     return response.json()
+
+
+def hf_postprocess(prediction):
+    try:
+        prediction = (
+            prediction.split("<</SYS>>")[1]
+            .split("[/INST]")[0]
+            .replace("<<SYS>>", "")
+            .replace("[INST]", "")
+            .strip()
+        )
+    except Exception as e:
+        prediction = prediction.split("<interact>")[0].strip()
+        logger.error(f"An error occurred during HF postprocessing: {e}")
+    return prediction
 
 
 def hf_inference(question: str, history: str):
@@ -44,11 +60,12 @@ def hf_inference(question: str, history: str):
         print("result", result)
 
         try:
-            result = chat._postprocess(result[0]["generated_text"])
+            result = hf_postprocess(result[0]["generated_text"])
             return result
-        except Exception as e:
-            logger.error(f"An error occurred during HF postprocessing: {e}")
-            return "An error occurred while trying to fetch your answer. Please try again:)"
+        except Exception as e_postprocess:
+            logger.error(f"An error occurred during HF postprocessing: {e_postprocess}")
+            raise e_postprocess
+            # return "An error occurred while trying to fetch your answer. Please try again:)"
 
     except Exception as e:
         logger.error(f"An error occurred during HF inference: {e}")
