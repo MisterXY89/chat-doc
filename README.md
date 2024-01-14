@@ -38,7 +38,7 @@ pipe = pipeline("text-generation", model="MisterXY89/chat-doctor")
 pipe("Hi, I feel dizzy and have a headache for a few days already. Should I go the doctor?")
 ```
 
-### Reproduce the Results
+### Reproduce the Results and run the CLI
 To use the ChatDoc application, follow the steps below:
 1. Clone the Repository:
 ```bash
@@ -53,27 +53,40 @@ conda env create -f environment.yml
 conda activate chat-doc
 ```
 
-3. Set up pre-commit hooks:
+3. (Set up pre-commit hooks:)
 ```bash
 pre-commit install
 ```
 
-4. Generate Data:
+1. Rename the `.env.example` file to `.env` and fill in your credentials.
+```bash
+# assuming you are in the root folder of the project
+mv chat_doc/.env.example chat_doc/.env
+nano chat_doc/.env
+```
+
+1. Generate Data:
 To generate data for the chatbot, use the following command:
 ```bash
 python pipe.py generate --dataset dialogue-full
 ```
 Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`.
 
-5. Train the Model:
+1. Train the Model:
    Training is done on AWS SageMaker, you can use the CLI to start the training:
 ```bash
 python pipe.py train --dataset xxx --model xxx
 ```
+
 Replace dataset name with one of: `"pmc", "icd", "diagnose", "med-dialogue", "dialogue-full", "full"`,
 model can be any llama2 model from the [huggingface model hub](https://huggingface.co/meta-llama).
 
 Alternativly, you can use the `sage_maker_training.ipynb` notebook and configure the training job there.
+
+6. Start the Web-App:
+```bash
+python pipe.py run-app
+```
 
 ## Training Results
 The first training results are stored in the [logs](./logs) folder and visualized below:

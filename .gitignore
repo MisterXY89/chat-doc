@@ -12,3 +12,8 @@ __pycache__/
 
 node_modules/
 *-lock.json
+
+chat_doc/data/
+__data/
+
+.$*
