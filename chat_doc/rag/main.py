@@ -2,7 +2,9 @@ from llama_index import download_loader
 from llama_index.query_engine import RetrieverQueryEngine
 from tqdm import tqdm
 
-from chat_doc.config import BASE_DIR
+from chat_doc.config import logger
+
+# from chat_doc.config import BASE_DIR
 from chat_doc.rag.document_processing import DocumentProcessor
 from chat_doc.rag.embedding_models import EmbeddingModel
 from chat_doc.rag.llama_models import LlamaModel
@@ -11,16 +13,23 @@ from chat_doc.rag.vector_store_management import VectorStoreManager
 
 
 class RAGManager:
-    def __init__(self):
+    def __init__(self, process_documents=False):
         self.embed_model = None
         self.llama_model = None
         self.service_context = None
         self.vector_store_manager = None
         self.retriever = None
         self.query_engine = None
-        self.init_rag()
+        self.init_rag(process_documents=process_documents)
 
-    def init_rag(self):
+    def _process_documents(self):
+        # Initialize document processor and vector store manager
+        SimpleCSVReader = download_loader("SimpleCSVReader")
+        loader = SimpleCSVReader(encoding="utf-8")
+        self.document_processor = DocumentProcessor(loader)
+        return self.document_processor.process_documents()
+
+    def init_rag(self, process_documents=False):
         # Initialize embedding model
         self.embed_model = EmbeddingModel(model_name="BAAI/bge-small-en")
 
@@ -30,10 +39,9 @@ class RAGManager:
         )
         self.service_context = self.llama_model.create_service_context(self.embed_model.embed_model)
 
-        # Initialize document processor and vector store manager
-        SimpleCSVReader = download_loader("SimpleCSVReader")
-        loader = SimpleCSVReader(encoding="utf-8")
-        document_processor = DocumentProcessor(loader)
+        if process_documents:
+            nodes = self._process_documents()
+            embedded_nodes = self.embed_model.embed_nodes(nodes)
 
         self.vector_store_manager = VectorStoreManager(
             db_name="vector_db",
@@ -41,6 +49,7 @@ class RAGManager:
             user="docrag",
             password="rag-adl-llama",
             port="5432",
+            reset=process_documents,  # drop and recreate the database if True
         )
         self.vector_store_manager.setup_database()
         self.vector_store_manager.create_vector_store(
@@ -48,14 +57,8 @@ class RAGManager:
             embed_dim=384,  # increase this to 768 if using a large model?
         )
 
-        # if ADD_NODES (initialize vector store) is True, add nodes to vector store
-        ADD_NODES = False
-        if ADD_NODES:
-            # TODO: Uncomment this to process documents for embeddings --> MAKE CLEANER (e.g. cli command)
-            # Process documents for embeddings
-            documents = document_processor.load_documents(BASE_DIR + "/data/icd11.csv")
-            nodes = document_processor.process_documents(documents)
-            self.vector_store_manager.add_nodes(nodes)
+        if process_documents:
+            self.vector_store_manager.add_nodes(embedded_nodes)
 
         # Initialize retriever and query engine
         self.retriever = VectorDBRetriever(
@@ -71,6 +74,8 @@ class RAGManager:
             self.retriever, service_context=self.service_context
         )
 
+        logger.info("RAG initialized.")
+
     def retrieve(self, query_string, use_llm=False):
         """
         Retrieve information based on the query string.
@@ -82,6 +87,7 @@ class RAGManager:
         Returns:
             Response from the retrieval process.
         """
+        logger.info(f"Retrieving information based on the query string: {query_string}")
         if use_llm:
             # Use LLM for augmented generation
             return self.query_engine.query(query_string)
@@ -103,10 +109,12 @@ def _handle_response(response):
             print(f"Score: {node_with_score.score}, Content: {node_with_score.node.get_content()}")
 
 
-def retrieve(query_string, use_llm=False):
-    rag_manager = RAGManager()
-
-    return _handle_response(rag_manager.retrieve(query_string, use_llm))
+def retrieve(query_string, use_llm=False, process_documents=False):
+    rag_manager = RAGManager(process_documents=process_documents)
+    response = rag_manager.retrieve(query_string, use_llm)
+    print(response)
+    _handle_response(response)
+    return response
 
 
 if __name__ == "__main__":

@@ -18,9 +18,10 @@ class VectorDBRetriever(BaseRetriever):
         query_embedding = self._embed_model.get_query_embedding(query_bundle.query_str)
         vector_store_query = VectorStoreQuery(
             query_embedding=query_embedding,
-            similarity_top_k=self._similarity_top_k,
+            similarity_top_k=5,
             mode=self._query_mode,
         )
+
         query_result = self._vector_store.query(vector_store_query)
 
         nodes_with_scores = []
@@ -33,6 +34,7 @@ class VectorDBRetriever(BaseRetriever):
         return nodes_with_scores
 
     def query(self, query_str: str) -> Any:
+        print("Querying...")
         # Check if embeddings exist for the nodes in the vector store.
         embeddings_exist = self._check_embeddings_existence()
         if not embeddings_exist:
@@ -54,7 +56,6 @@ class VectorDBRetriever(BaseRetriever):
         """
         # Implement the logic to check if embeddings exist.
         # This could be a database query or a check in the vector store.
-        # For example: return self._vector_store.check_embeddings_existence()
         return True  # Placeholder return
 
     def _ask_user_for_processing(self):

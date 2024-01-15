@@ -65,6 +65,9 @@ if __name__ == "__main__":
     rag_parser = subparsers.add_parser("run-rag", help="Run RAG")
     rag_parser.add_argument("--query", required=True, help="Query string")
     rag_parser.add_argument("--use_llm", default=False, help="Use LLM for augmented generation")
+    rag_parser.add_argument(
+        "--process_documents", default=False, help="Process documents for embeddings"
+    )
 
     args = parser.parse_args()
 
@@ -102,7 +105,7 @@ if __name__ == "__main__":
     elif args.command == "run-rag":
         logger.info(f"Running RAG on query: {args.query}")
         logger.info(f"Use LLM for augmented generation: {args.use_llm}")
-        rag.retrieve(args.query, args.use_llm)
+        rag.retrieve(args.query, args.use_llm, args.process_documents)
 
     else:
         logger.error("Invalid command. Use 'generate' or 'train', 'run-app' or 'run-rag'.")

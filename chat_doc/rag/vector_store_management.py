@@ -3,7 +3,7 @@ from llama_index.vector_stores import PGVectorStore
 
 
 class VectorStoreManager:
-    def __init__(self, db_name, host, user, password, port):
+    def __init__(self, db_name, host, user, password, port, reset=False):
         self.db_name = db_name
         self.host = host
         self.user = user
@@ -11,6 +11,7 @@ class VectorStoreManager:
         self.port = port
         self.conn = None
         self.vector_store = None
+        self.reset = reset
 
     def setup_database(self):
         self.conn = psycopg2.connect(
@@ -21,10 +22,11 @@ class VectorStoreManager:
             user=self.user,
         )
         self.conn.autocommit = True
-        with self.conn.cursor() as c:
-            c.execute(f"DROP DATABASE IF EXISTS {self.db_name}")
-            c.execute(f"CREATE DATABASE {self.db_name}")
-        self.conn.close()
+        if self.reset:
+            with self.conn.cursor() as c:
+                c.execute(f"DROP DATABASE IF EXISTS {self.db_name}")
+                c.execute(f"CREATE DATABASE {self.db_name}")
+            self.conn.close()
 
     def create_vector_store(self, table_name, embed_dim):
         self.vector_store = PGVectorStore.from_params(

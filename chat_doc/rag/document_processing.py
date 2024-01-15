@@ -3,6 +3,8 @@ from pathlib import Path
 from llama_index.node_parser.text import SentenceSplitter
 from llama_index.schema import TextNode
 
+from chat_doc.config import BASE_DIR, logger
+
 
 class DocumentProcessor:
     def __init__(self, loader, text_parser=SentenceSplitter(chunk_size=1024)):
@@ -12,7 +14,10 @@ class DocumentProcessor:
     def load_documents(self, file_path):
         return self.loader.load_data(file=Path(file_path))
 
-    def process_documents(self, documents):
+    def process_documents(self, documents=None):
+        if not documents:
+            documents = self.load_documents(file_path=Path(BASE_DIR + "/data/icd11.csv"))
+
         text_chunks = []
         doc_idxs = []
         for doc_idx, doc in enumerate(documents):
@@ -27,4 +32,5 @@ class DocumentProcessor:
             node.metadata = src_doc.metadata
             nodes.append(node)
 
+        self.nodes = nodes
         return nodes
