@@ -1,4 +1,4 @@
-# "Chat-Doc": Fine-tuning Llama2 for a medical chat-app
+# "Chat-Doc": Fine-tuning Llama 2 for a medical chat-app
 
 <img src="images/logo/DALL-E-llama-doc-border-radius-50.png" width="150px" align="right">
 
