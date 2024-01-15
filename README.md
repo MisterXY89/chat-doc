@@ -22,6 +22,10 @@ The goal of this specific project is to fine-tune Llama2 model for a medical cha
 ## Project Overview
 The ChatDoc project aims to deploy a medical chatbot application that assists users in assessing their medical symptoms and provides reliable recommendations. The chatbot is powered by the Llama2 model, fine-tuned for medical NLP tasks using the QLoRA technique.
 
+<!-- architecture img  -->
+![architecture](/images/architecture.png)
+
+
 ## Getting Started
 
 ### From the HuggingFace Model Hub
