@@ -14,8 +14,8 @@
     - [Inference](#inference)
   - [3. Results](#3-results)
     - [Model](#model)
-    - [Qualitative Evaluation](#qualitative-evaluation)      
-    - [Quantitative Results](#quantitative-results)      
+    - [Qualitative Evaluation](#qualitative-evaluation)
+    - [Quantitative Results](#quantitative-results)
   - [Time-spent](#time-spent)
   - [Conclusion](#conclusion-1)
 

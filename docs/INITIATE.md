@@ -37,18 +37,18 @@ To adress this issue, we have various options in mind. If there is enough time, 
 See future work for more details.
 
 ## Data
-To train and develop a medical-diagnosis/doctor chatbot, it is crucial to have access to reliable, standardized data for disease classification and diagnosis. 
+To train and develop a medical-diagnosis/doctor chatbot, it is crucial to have access to reliable, standardized data for disease classification and diagnosis.
 This data is fundamental for providing the chatbot's capability to provide accurate and up-to-date medical information.
 For this, we propose the *[International Classification of Diseases, 11th Revision (ICD-11)](https://icd.who.int/browse11/l-m/en)*, which is the latest version of the World Health Organization's (WHO) International Classification of Diseases (ICD) [1].
 
 ### Characteristics
-ICD-11 [1] represents a significant advancement in disease classification, marked by its transition to a computable knowledge framework, setting it apart from earlier revisions. 
+ICD-11 [1] represents a significant advancement in disease classification, marked by its transition to a computable knowledge framework, setting it apart from earlier revisions.
 This framework facilitates interoperability in digital health information environments.
 
 ICD-11's information framework consists of three interconnected elements: the Foundation, classifications derived from the Foundation, and a common biomedical ontology linked to the Foundation.
 
-The Foundation, the cornerstone of ICD-11, comprises approximately 80,000 entries with 40,000 synonyms. 
-It characterizes diseases, syndromes, and health-related phenomena, not only descriptively but also by specifying relationships with other entities. 
+The Foundation, the cornerstone of ICD-11, comprises approximately 80,000 entries with 40,000 synonyms.
+It characterizes diseases, syndromes, and health-related phenomena, not only descriptively but also by specifying relationships with other entities.
 The Foundation essentially functions as a semantic network, facilitating digital systems in capturing and interpreting meaning associated with each entity.
 
 
@@ -63,13 +63,13 @@ The data will be collected either:
 Following, we present the approach we intend to take, for each the training, inference and deployment phase.
 
 ### Training
-For the training phase, we aim to fine-tune the Llama2 model using the QLoRA technique, known as Quantized Low-Rank Adapter adaptation for pretrained language models (QLoRA). 
+For the training phase, we aim to fine-tune the Llama2 model using the QLoRA technique, known as Quantized Low-Rank Adapter adaptation for pretrained language models (QLoRA).
 This method is particularly noteworthy for its efficiency in adapting a pretrained language model to specific downstream tasks.
-QLoRA quantizes the model to 4 bits and attaches small "Low-Rank Adapters" for fine-tuning. 
+QLoRA quantizes the model to 4 bits and attaches small "Low-Rank Adapters" for fine-tuning.
 Despite its computational efficiency, QLoRA achieves state-of-the-art results on language tasks and enables fine-tuning of models with up to 65 billion parameters on a single GPU [2].
 
-To facilitate this training process, we will leverage the [Hugging Face Transformers library](https://huggingface.co/docs/transformers/index) [4], [Accelerate](https://huggingface.co/docs/accelerate/index), and the recently developed [PEFT](https://github.com/huggingface/peft) (Parameter Efficient Fine-tuning) [5] library by Hugging Face. 
-PEFT provides techniques such as QLoRA, Prefix Tuning, Prompt Tuning, and IA3, all of which enable efficient adaptation of pre-trained language models to various downstream applications. 
+To facilitate this training process, we will leverage the [Hugging Face Transformers library](https://huggingface.co/docs/transformers/index) [4], [Accelerate](https://huggingface.co/docs/accelerate/index), and the recently developed [PEFT](https://github.com/huggingface/peft) (Parameter Efficient Fine-tuning) [5] library by Hugging Face.
+PEFT provides techniques such as QLoRA, Prefix Tuning, Prompt Tuning, and IA3, all of which enable efficient adaptation of pre-trained language models to various downstream applications.
 This approach will ensure that our chatbot benefits from state-of-the-art model adaptation while efficiently utilizing computational resources.
 
 Additionally, the training data will be sourced from the ICD-11 knowledge framework, enhancing the model's medical understanding and diagnostic capabilities.
@@ -80,7 +80,7 @@ There are two options I have in mind to embedd the trained model into an applica
 1. Use the trained model as a service (hosted on AWS or GCP) and providee an API to communicate with the model.
 2. Embedd the model diretly in a web-app (e.g. using Flask) and provide a web-interface to communicate with the model (like Chat-GPT).
 
-Deployment and hosting will most likely be done on AWS or GCP, both provide a variety of services to host and deploy (ML) applications. 
+Deployment and hosting will most likely be done on AWS or GCP, both provide a variety of services to host and deploy (ML) applications.
 Additionally, both have a free tier, which should be sufficient for our purpose.
 
 ## Time Plan
