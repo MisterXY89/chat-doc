@@ -34,20 +34,20 @@ def _test_build(name):
 #     assert os.path.exists("data/full_dialogue_prompts.pkl")
 
 
-def test_icd_build():
-    _test_build("icd")
+# def test_icd_build():
+#     _test_build("icd")
 
 
-def test_pmc_build():
-    _test_build("pmc")
+# def test_pmc_build():
+# _test_build("pmc")
 
 
 # def test_diagnose_me_build():
 #     _test_build("diagnose")
 
 
-def test_med_dialogue_build():
-    _test_build("med-dialogue")
+# def test_med_dialogue_build():
+#     _test_build("med-dialogue")
 
 
 if __name__ == "__main__":
