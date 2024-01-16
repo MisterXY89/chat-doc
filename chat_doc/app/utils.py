@@ -27,7 +27,7 @@ def _make_hf_request(payload):
     API_URL = "https://pxei8lam5mc67ngq.eu-west-1.aws.endpoints.huggingface.cloud"
     headers = {
         "Accept": "application/json",
-        "Authorization": "Bearer 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",
+        "Authorization": f"Bearer {config['credentials']['hf_token']}",
         "Content-Type": "application/json",
     }
 
