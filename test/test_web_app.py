@@ -6,8 +6,7 @@ from flask import Flask
 
 @pytest.fixture
 def client():
-    app_instance = Flask("test")
-    app = app_instance.app
+    app = Flask("test")
     app.config["TESTING"] = True  # Enable testing mode
     with app.test_client() as client:
         yield client
