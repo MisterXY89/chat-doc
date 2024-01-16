@@ -24,17 +24,19 @@ def generate_chat_id(req: request):
 
 def _make_hf_request(payload):
     # API_URL_V1 = "https://chdgdfk63z6o9xd8.eu-west-1.aws.endpoints.huggingface.cloud"
-    API_URL_V2 = "https://pxei8lam5mc67ngq.eu-west-1.aws.endpoints.huggingface.cloud"
+    API_URL = "https://pxei8lam5mc67ngq.eu-west-1.aws.endpoints.huggingface.cloud"
     headers = {
-        "Authorization": f"Bearer {config['credentials']['hf_token']}",
+        "Accept": "application/json",
+        "Authorization": "Bearer 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",
         "Content-Type": "application/json",
     }
 
-    response = requests.post(API_URL_V2, headers=headers, json=payload)
+    response = requests.post(API_URL, headers=headers, json=payload)
     return response.json()
 
 
 def hf_postprocess(prediction):
+    print("prediction", prediction)
     try:
         prediction = (
             prediction.split("<</SYS>>")[1]
@@ -59,8 +61,9 @@ def hf_inference(question: str, history: str, icd_match: str):
         print("final_prompt", final_prompt)
 
         payload = chat._payload(final_prompt, qa=False)
+        print(payload)
         result = _make_hf_request(payload)
-        result = "test"
+        # result = "test"
         print("result", result)
 
         try:
@@ -72,8 +75,9 @@ def hf_inference(question: str, history: str, icd_match: str):
             # return "An error occurred while trying to fetch your answer. Please try again:)"
 
     except Exception as e:
-        logger.error(f"An error occurred during HF inference: {e}")
-        return "An error occurred while trying to fetch your answer. Please try again:)"  # or an appropriate fallback response
+        raise e
+        # logger.error(f"An error occurred during HF inference: {e}")
+        # return "An error occurred while trying to fetch your answer. Please try again:)"  # or an appropriate fallback response
 
 
 def update_chat_history(chat_id: str, question: str, answer: str):

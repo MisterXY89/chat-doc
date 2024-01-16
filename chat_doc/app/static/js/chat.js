@@ -72,12 +72,18 @@ function setICDResults(icd_matches) {
 
     const bestMatch = icd_matches[0];
 
+    const icd11URL = "https://icd.who.int/browse11/l-m/en#/http%3A%2F%2Fid.who.int%2Ficd%2Fentity%2F" + bestMatch.metadata.id;
+    console.log(icd11URL);
+
     resultsDiv.innerHTML += `
-        <div class="overflow-x-none">
+        <div class="overflow-x-none pb-3">
+            <a href="${icd11URL}" target="_blank">
+                <div class="badge badge-md badge-primary badge-outline">ICD-ID: ${bestMatch.metadata.id}</div>
+            </a>
             <div class="badge badge-md badge-accent badge-outline">Match ${bestMatch.score.toFixed(3)}</div>
         </div>
         <p>
-            ${bestMatch.id}
+            ${bestMatch.text}
         </p>
     `;
     // ${bestMatch.text.slice(0, 100)} ...

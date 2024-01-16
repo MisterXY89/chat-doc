@@ -5,8 +5,9 @@ def parse_data():
     _df = pd.read_json("chat_doc/data/pinglab-ICD11-data.json")
     _df = _df.query("definition != 'Key Not found'")
     _df.reset_index(inplace=True)
-    _df = _df["name", "definition"]
-    _df["text"] = "Name:" + _df["name"] + "\nDefinition: " + _df["definition"]
+
+    _df = _df[["name", "definition", "id"]]
+    # _df["text"] = "Name:" + _df["name"] + "\nDefinition: " + _df["definition"]
 
     return _df
 

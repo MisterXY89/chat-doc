@@ -97,7 +97,7 @@ class Chat(object):
                 "max_new_tokens": 512,
                 "repetition_penalty": 1.2,
                 "length_penalty": 0.3,
-                "stop": "<</SYS>>",
+                # "stop": ["<</SYS>>"],
             },
         }
         # override parameters for qa --> single-choice questions
