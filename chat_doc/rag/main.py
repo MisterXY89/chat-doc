@@ -112,9 +112,17 @@ def _handle_response(response):
 def retrieve(query_string, use_llm=False, process_documents=False):
     rag_manager = RAGManager(process_documents=process_documents)
     response = rag_manager.retrieve(query_string, use_llm)
-    print(response)
-    _handle_response(response)
-    return response
+    return [
+        {
+            "score": node_with_score.get_score(),
+            "content": node_with_score.node.get_content(),
+            "text": node_with_score.node.get_text(),
+            "metadata": node_with_score.node.metadata,
+            "node_id": node_with_score.node_id,
+            "id": node_with_score.id_,
+        }
+        for node_with_score in response
+    ]
 
 
 if __name__ == "__main__":
