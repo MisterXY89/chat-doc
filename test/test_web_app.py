@@ -1,11 +1,12 @@
 import pytest
+from flask import Flask
 
-from chat_doc.app.app import App
+# from chat_doc.app.app import App
 
 
 @pytest.fixture
 def client():
-    app_instance = App()
+    app_instance = Flask("test")
     app = app_instance.app
     app.config["TESTING"] = True  # Enable testing mode
     with app.test_client() as client:
