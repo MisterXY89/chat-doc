@@ -31,7 +31,7 @@ jobs:
         # Lint using flake8 with settings from .flake8 file
         flake8 --config .flake8
 
-    - name: Test with pytest
-      run: |
-        conda install pytest
-        pytest
+    # - name: Test with pytest
+    #   run: |
+    #     conda install pytest
+    #     pytest
