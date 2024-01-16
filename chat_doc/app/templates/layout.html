@@ -13,14 +13,14 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 	</head>
 	<body class="h-screen w-full">
-		<main class="">
+		<main class="main h-screen">
 			{% include "includes/nav.html" %}
 
 			{% block header %}
 			<header class="container">
 			</header>
 			{% endblock %}
-			<div class="container mx-auto px-4">
+			<div class="mx-auto px-4 h-[87%] overflow-hidden">
 				{% block content %}
 
 				{% endblock %}

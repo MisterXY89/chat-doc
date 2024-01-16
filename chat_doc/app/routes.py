@@ -14,6 +14,7 @@ from flask import (
     url_for,
 )
 
+import chat_doc.rag.main as rag
 from chat_doc.app.utils import generate_chat_id, hf_inference, update_chat_history
 
 # Create a Blueprint
@@ -32,11 +33,6 @@ def chat():
     return render_template("chat.html", chat_id=chat_id, title="Chat")
 
 
-# My right leg itches a lot and I dont know why. I have not been in contact with anything I think
-
-# But what could be the allergy? it is only my left leg. that is very weird
-
-
 # call hf inference endpoint, extract answer and return it
 @routes_blueprint.route("/api/ask", methods=["POST"])
 def chat_doc():
@@ -46,13 +42,30 @@ def chat_doc():
     history = request.json["history"]
     question = request.json["question"]
 
+    icd_matches = rag.retrieve(question)
+
     print("chat_id", chat_id)
     print("history", history)
     print("question", question)
 
-    answer = hf_inference(question, history)
-    print("answer", answer)
-    # chat-id is our identifier to the text
+    answer = hf_inference(question, history, icd_match=icd_matches[0]["text"])
     update_chat_history(chat_id, question, answer)
 
-    return jsonify(answer=answer)
+    return jsonify(
+        answer=answer,
+        icd_matches=icd_matches,
+    )
+
+
+# retrive best matches from rag (ICD)
+@routes_blueprint.route("/api/retrieve", methods=["POST"])
+def rag_retrieve():
+    print(request.json)
+    query = request.json["query"]
+
+    print("query", query)
+
+    matches = rag.retrieve(query)
+    return jsonify(
+        matches=matches,
+    )

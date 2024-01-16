@@ -66,6 +66,29 @@ function appendMSG(html) {
     document.querySelector(".doc-chat").innerHTML += html;
 }
 
+function setICDResults(icd_matches) {
+    const resultsDiv = document.querySelector("#icd-retrieval-results");
+    resultsDiv.innerHTML = "";
+
+    const bestMatch = icd_matches[0];
+
+    resultsDiv.innerHTML += `
+        <div class="overflow-x-none">
+            <div class="badge badge-md badge-accent badge-outline">Match ${bestMatch.score.toFixed(3)}</div>
+        </div>
+        <p>
+            ${bestMatch.id}
+        </p>
+    `;
+    // ${bestMatch.text.slice(0, 100)} ...
+
+}
+
+function scrollToBottom() {
+    const objDiv = document.querySelector(".doc-chat");
+    objDiv.scrollTop = objDiv.scrollHeight;
+}
+
 
 async function askDoc() {
 
@@ -119,9 +142,11 @@ async function askDoc() {
         .then(response => {
             console.log(response);
             replaceDocMSG(response.answer);
+            setICDResults(response.icd_matches);
         });
 
-    // replaceDocMSG(response.json().answer);
+    scrollToBottom();
+
 }
 
 

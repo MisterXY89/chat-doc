@@ -49,14 +49,18 @@ def hf_postprocess(prediction):
     return prediction
 
 
-def hf_inference(question: str, history: str):
+def hf_inference(question: str, history: str, icd_match: str):
     try:
+        question = question.strip()
+
+        question = f"{question}\n\n Additional information: {icd_match} \n\n"
         prompt = PromptTemplate()
         final_prompt = prompt.create_prompt(input_text=question, history=history)
         print("final_prompt", final_prompt)
 
         payload = chat._payload(final_prompt, qa=False)
         result = _make_hf_request(payload)
+        result = "test"
         print("result", result)
 
         try:
